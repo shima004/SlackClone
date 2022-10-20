@@ -38,12 +38,12 @@ func LoginPost(c echo.Context) error {
 
 	token := jwt.New(jwt.SigningMethodHS256)
 	climes := token.Claims.(jwt.MapClaims)
-	climes["uid"] = user.UUID
+	climes["uid"] = user.UserID
 	climes["exp"] = time.Now().Add(time.Hour * 24 * 3).Unix()
 	t, err := token.SignedString([]byte("secret"))
 	if err != nil {
 		return err
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{"token": t}) // フロントに返す値
+	return c.JSON(http.StatusOK, map[string]interface{}{"token": t})
 }

@@ -15,7 +15,7 @@ func UserGet(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "データが取得できませんでした: " + err.Error()})
 	}
-	return c.JSON(http.StatusOK, map[string]interface{}{"name": user.Name, "coin": user.Coin})
+	return c.JSON(http.StatusOK, map[string]interface{}{"name": user.Name})
 }
 
 type UserPostParams struct {
