@@ -45,7 +45,7 @@ func PostUser(email string, password string, name string) (err error) {
 	}
 
 	// データベースに登録
-	var u model.User = model.User{Email: email, Password: hashStr, Name: name, Coin: 100, UUID: uid.String()}
+	var u model.User = model.User{Email: email, Password: hashStr, Name: name, UserID: uid.String()}
 	err = db.Create(&u).Error
 
 	return err
@@ -62,7 +62,7 @@ func PutUser(c echo.Context, name string) (err error) {
 	}
 
 	// データベースを更新
-	err = db.Model(model.User{}).Where("uuid = ?", user.UUID).Select("name").Updates(model.User{Name: name}).Error
+	err = db.Model(model.User{}).Where("uuid = ?", user.UserID).Select("name").Updates(model.User{Name: name}).Error
 
 	return err
 }

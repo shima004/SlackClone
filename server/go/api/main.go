@@ -63,8 +63,6 @@ func main() {
 	}))
 
 	// api routes
-	// http://localhost:8080/coin : GET apifunc->coin.go->CoinPost()
-	requiredAuth.POST("/coin", apifunc.CoinPost)
 	// http://localhost:8080/user : GET apifunc->user.go->UserGet()
 	requiredAuth.GET("/user", apifunc.UserGet)
 	// http://localhost:8080/user : POST apifunc->user.go->UserPost()
@@ -73,17 +71,6 @@ func main() {
 	requiredAuth.PUT("/user", apifunc.UserPut)
 	// http://localhost:8080/login : POST apifunc->login.go->LoginPost()
 	e.POST("/login", apifunc.LoginPost)
-
-	// html routes
-	e.GET("/", apifunc.GetIndex)
-	e.GET("/blockBreaker", apifunc.GetBlockBreaker)
-	requiredAuth.GET("/hockey", apifunc.GetHockey)
-	e.GET("/numberGuessing", apifunc.GetNumberGuessing)
-	e.GET("/shooting", apifunc.GetShooting)
-	e.GET("/slot", apifunc.GetSlot)
-	e.GET("/auth/signUp", apifunc.GetSignUp)
-	e.GET("/auth/signIn", apifunc.GetSignIn)
-	e.GET("/auth/signOut", apifunc.GetSignOut)
 
 	// 8080番ポートで待ち受け
 	e.Logger.Fatal(e.Start(":8080"))
