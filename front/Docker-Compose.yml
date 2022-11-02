@@ -6,6 +6,6 @@ services:
       dockerfile: Dockerfile
     tty: true
     volumes:
-      - ./slack-clone:/slack-clone
+      - ./../../SlackCopy:/app
     ports:
       - "3000:3000"
