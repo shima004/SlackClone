@@ -1,6 +1,6 @@
 {
   "dockerComposeFile": ["../docker-compose.yml", "docker-compose.yml"],
   "service": "go",
-  "workspaceFolder": "/backend",
+  "workspaceFolder": "/app/server/go/api",
   "extensions": ["golang.go", "zxh404.vscode-proto3", "github.copilot", "oderwat.indent-rainbow"]
 }
