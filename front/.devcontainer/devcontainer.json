@@ -1,6 +1,12 @@
 {
   "dockerComposeFile": ["../docker-compose.yml", "docker-compose.yml"],
   "service": "web",
-  "extensions": ["github.copilot", "oderwat.indent-rainbow", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode"],
+  "extensions": [
+    "github.copilot",
+    "oderwat.indent-rainbow",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "github.vscode-pull-request-github"
+  ],
   "workspaceFolder": "/app/front/slack-clone"
 }
