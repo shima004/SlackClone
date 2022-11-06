@@ -62,7 +62,23 @@ func PutUser(c echo.Context, name string) (err error) {
 	}
 
 	// データベースを更新
-	err = db.Model(model.User{}).Where("uuid = ?", user.UserID).Select("name").Updates(model.User{Name: name}).Error
+	err = db.Model(model.User{}).Where("user_id = ?", user.UserID).Select("name").Updates(model.User{Name: name}).Error
+
+	return err
+}
+
+func DeleteUser(c echo.Context) (err error) {
+	db := sqlConnect()
+	defer db.Close()
+
+	// データベースに存在しているか確認
+	user, err := GetUserFromToken(c)
+	if err != nil {
+		return err
+	}
+
+	// データベースから削除
+	err = db.Delete(model.User{}, "user_id = ?", user.UserID).Error
 
 	return err
 }
@@ -89,20 +105,20 @@ func GetUserFromToken(c echo.Context) (u model.User, err error) {
 	// トークンを取得
 	token := c.Get("user").(*jwt.Token)
 	claims := token.Claims.(jwt.MapClaims)
-	uid := claims["uid"].(string)
+	userId := claims["uid"].(string)
 
 	// データベースからユーザー情報を取得
-	err = db.Where("uuid = ?", uid).First(&u).Error
+	err = db.Where("user_id = ?", userId).First(&u).Error
 
 	return u, err
 }
 
-func GetUserFromUUID(uuid string) (u model.User, err error) {
+func GetUserFromUUID(userId string) (u model.User, err error) {
 	db := sqlConnect()
 	defer db.Close()
 
 	// データベースからユーザー情報を取得
-	err = db.Where("uuid = ?", uuid).First(&u).Error
+	err = db.Where("user_id = ?", userId).First(&u).Error
 
 	return u, err
 }
