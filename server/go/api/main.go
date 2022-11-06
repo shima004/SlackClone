@@ -3,8 +3,6 @@ package main
 import (
 	"Slack/apifunc"
 	"fmt"
-	"html/template"
-	"io"
 	"log"
 	"net/http"
 	"os"
@@ -27,15 +25,7 @@ func (cv *CustomValidator) Validate(i interface{}) error {
 	return nil
 }
 
-type Template struct {
-	templates *template.Template
-}
-
-func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-	return t.templates.ExecuteTemplate(w, name, data)
-}
-
-func main() {
+func NewServer() *echo.Echo {
 	e := echo.New()
 	e.Validator = &CustomValidator{validator: validator.New()}
 
@@ -58,8 +48,8 @@ func main() {
 	requiredAuth := e.Group("")
 
 	requiredAuth.Use(middleware.JWTWithConfig(middleware.JWTConfig{
-		SigningKey:  []byte("secret"),
-		TokenLookup: "cookie:token",
+		SigningKey: []byte("secret"),
+		// TokenLookup: "header: Authorization,cookie:token",
 	}))
 
 	// api routes
@@ -69,9 +59,13 @@ func main() {
 	e.POST("/user", apifunc.UserPost)
 	// http://localhost:8080/user : PUT apifunc->user.go->UserPut()
 	requiredAuth.PUT("/user", apifunc.UserPut)
+	requiredAuth.DELETE("/user", apifunc.UserDelete)
 	// http://localhost:8080/login : POST apifunc->login.go->LoginPost()
 	e.POST("/login", apifunc.LoginPost)
+	return e
+}
 
-	// 8080番ポートで待ち受け
+func main() {
+	e := NewServer()
 	e.Logger.Fatal(e.Start(":8080"))
 }

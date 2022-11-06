@@ -72,3 +72,10 @@ func UserPut(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, map[string]interface{}{"message": "success"})
 }
+
+func UserDelete(c echo.Context) error {
+	if err := dbfunc.DeleteUser(c); err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "データベースの更新に失敗しました: " + err.Error()})
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{"message": "success"})
+}
