@@ -1,4 +1,4 @@
-package main
+package test
 
 import (
 	"Slack/apifunc"
@@ -9,6 +9,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"Slack/server"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -18,30 +20,8 @@ var (
 	name     = "test"
 )
 
-func GetToken() string {
-	router := NewServer()
-	var j = map[string]string{
-		"email":    email,
-		"password": password,
-	}
-	b, _ := json.Marshal(j)
-
-	req := httptest.NewRequest("POST", "/login", bytes.NewBuffer(b))
-	req.Header.Set("Content-Type", "application/json")
-	rec := httptest.NewRecorder()
-	router.ServeHTTP(rec, req)
-
-	var res map[string]string
-	err := json.Unmarshal(rec.Body.Bytes(), &res)
-	if err != nil {
-		log.Println(err)
-	}
-
-	return res["token"]
-}
-
 func TestUserPost(t *testing.T) {
-	router := NewServer()
+	router := server.NewServer()
 	var j = apifunc.UserPostParams{
 		Email:    email,
 		Password: password,
@@ -65,7 +45,7 @@ func TestUserPost(t *testing.T) {
 }
 
 func TestLoginPost(t *testing.T) {
-	router := NewServer()
+	router := server.NewServer()
 	var j = map[string]string{
 		"email":    "test@test.com",
 		"password": "test",
@@ -84,8 +64,8 @@ func TestLoginPost(t *testing.T) {
 }
 
 func TestUserPut(t *testing.T) {
-	router := NewServer()
-	token := GetToken()
+	router := server.NewServer()
+	token := GetToken(email, password)
 
 	name = "test2"
 
@@ -111,8 +91,8 @@ func TestUserPut(t *testing.T) {
 }
 
 func TestUserGet(t *testing.T) {
-	router := NewServer()
-	token := GetToken()
+	router := server.NewServer()
+	token := GetToken(email, password)
 
 	req := httptest.NewRequest("GET", "/user", nil)
 	req.Header.Set("Content-Type", "application/json")
@@ -132,8 +112,8 @@ func TestUserGet(t *testing.T) {
 }
 
 func TestUserDelete(t *testing.T) {
-	router := NewServer()
-	token := GetToken()
+	router := server.NewServer()
+	token := GetToken(email, password)
 
 	req := httptest.NewRequest("DELETE", "/user", nil)
 	req.Header.Set("Authorization", "Bearer "+token)
