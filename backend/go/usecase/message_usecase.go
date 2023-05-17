@@ -7,16 +7,20 @@ import (
 	"github.com/shima004/slackclone/repository"
 )
 
-type MessageUsercase struct {
-	repository.Repository
+type MessageUsecase interface {
+	FetchMessages(ctx context.Context, auther string) (res []model.Message, err error)
 }
 
-func (u *MessageUsercase) FetchMessages(ctx context.Context, auther string) (res []model.Message, err error) {
-	fetchedMessage, _ := u.Repository.FetchMessages(ctx, auther)
+type DefaultMessageUsercase struct {
+	MessageRepository repository.MessageRepository
+}
+
+func (u *DefaultMessageUsercase) FetchMessages(ctx context.Context, auther string) (res []model.Message, err error) {
+	fetchedMessage, _ := u.MessageRepository.FetchMessages(ctx, auther)
 	var messages []model.Message
 	for _, message := range fetchedMessage {
 		messages = append(messages, model.Message{
-			Auther: message.Auther,
+			UserID: message.UserID,
 			Text:   message.Text,
 		})
 	}

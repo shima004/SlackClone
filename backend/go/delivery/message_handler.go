@@ -8,12 +8,12 @@ import (
 )
 
 type MessageHandler struct {
-	MessageUseCase usecase.MessageUsercase
+	MessageUseCase usecase.MessageUsecase
 }
 
-func NewMessageHandler(e *echo.Echo, mu usecase.MessageUsercase) {
+func NewMessageHandler(g *echo.Group, mu usecase.MessageUsecase) {
 	handler := &MessageHandler{mu}
-	e.GET("/api/messages", handler.FetchMessages)
+	g.GET("/messages", handler.FetchMessages)
 }
 
 func (mh *MessageHandler) FetchMessages(c echo.Context) error {

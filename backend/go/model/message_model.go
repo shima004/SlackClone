@@ -4,6 +4,7 @@ import "gorm.io/gorm"
 
 type Message struct {
 	gorm.Model
-	Auther string `json:"auther"`
-	Text   string `json:"text"`
+	UserID    uint   `json:"user_id"`
+	ChannelID uint   `json:"channel_id"`
+	Text      string `json:"text"`
 }

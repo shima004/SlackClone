@@ -11,9 +11,9 @@ import (
 )
 
 func TestGetAllMessages(t *testing.T) {
-	mockRepository := repository.MockRepository{}
+	mockRepository := repository.MockMessageRepository{}
 	mockMessage := model.Message{
-		Auther: "pacapaca",
+		UserID: 453671289,
 		Text:   "Hello World",
 	}
 	t.Run("should return messagess", func(t *testing.T) {
@@ -21,11 +21,11 @@ func TestGetAllMessages(t *testing.T) {
 			mockMessage,
 		}, nil).Once()
 
-		mu := MessageUsercase{&mockRepository}
+		mu := DefaultMessageUsercase{MessageRepository: &mockRepository}
 		list, err := mu.FetchMessages(context.TODO(), "pacapaca")
 		assert.NoError(t, err)
 		assert.Equal(t, 1, len(list))
-		assert.Equal(t, mockMessage.Auther, list[0].Auther)
+		assert.Equal(t, mockMessage.UserID, list[0].UserID)
 		assert.Equal(t, mockMessage.Text, list[0].Text)
 	})
 }
