@@ -7,12 +7,13 @@ services:
       MYSQL_DATABASE: "${MYSQL_DATABASE}"
       MYSQL_USER: "${MYSQL_USER}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
-      PROTOCOL: "${PROTOCOL}"
+      MYSQL_PORT: "${MYSQL_PORT}"
+      MYSQL_HOST: "${MYSQL_HOST}"
     build:
       context: .
       dockerfile: ./go/Dockerfile
     volumes:
-      - ./../../SlackClone:/app
+      - ./go:/go/src/app
     stdin_open: true
     tty: true
     ports:
@@ -36,7 +37,7 @@ services:
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
       - 3306:3306
-    platform: linux/x86_64
+    platform: linux/amd64
 
 volumes:
   db-data:
