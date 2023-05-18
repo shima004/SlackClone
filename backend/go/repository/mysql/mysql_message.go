@@ -1,6 +1,8 @@
 package mysql
 
 import (
+	"context"
+
 	"github.com/shima004/slackclone/model"
 	"gorm.io/gorm"
 )
@@ -13,13 +15,13 @@ func NewMysqlMessageRepository(db *gorm.DB) *MysqlMessageRepository {
 	return &MysqlMessageRepository{db: db}
 }
 
-func (r *MysqlMessageRepository) FetchMessages(auther string) ([]model.Message, error) {
+func (r *MysqlMessageRepository) FetchMessages(ctx context.Context, userID uint) ([]model.Message, error) {
 	var messages []model.Message
-	result := r.db.Where("auther = ?", auther).Find(&messages)
+	result := r.db.Where("user_id = ?", userID).Find(&messages)
 	return messages, result.Error
 }
 
-func (r *MysqlMessageRepository) PostMessage(message model.Message) error {
+func (r *MysqlMessageRepository) PostMessage(ctx context.Context, message model.Message) error {
 	result := r.db.Create(&message)
 	return result.Error
 }
