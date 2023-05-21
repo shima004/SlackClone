@@ -28,7 +28,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	db.AutoMigrate(&model.Message{})
+	db.Migrator().DropTable(&model.Message{})
+	db.Migrator().AutoMigrate(&model.Message{})
 	sqlDB, err := db.DB()
 	if err != nil {
 		panic(err)
