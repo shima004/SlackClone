@@ -18,6 +18,8 @@ func NewMessageHandler(g *echo.Group, mu usecase.MessageUsecase) {
 	handler := &MessageHandler{mu}
 	g.GET("/messages", handler.FetchMessages)
 	g.POST("/messages", handler.PostMessage)
+	g.DELETE("/messages/:id", handler.DeleteMessage)
+	g.PUT("/messages", handler.UpdateMessage)
 }
 
 func (mh *MessageHandler) FetchMessages(c echo.Context) error {
@@ -51,7 +53,42 @@ func (mh *MessageHandler) PostMessage(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 	return c.JSON(http.StatusCreated, message)
+}
 
+func (mh *MessageHandler) DeleteMessage(c echo.Context) error {
+	sMessageID := c.Param("id")
+	messageID, err := StringToUint(sMessageID)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+	ctx := c.Request().Context()
+	err = mh.MessageUseCase.DeleteMessage(ctx, messageID)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+	return c.JSON(http.StatusOK, "Deleted")
+}
+
+func (mh *MessageHandler) UpdateMessage(c echo.Context) error {
+	var message model.Message
+	if err := c.Bind(&message); err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, err)
+	}
+
+	if ok, err := isRequestValid(&message); !ok {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+
+	if ok := isIncludeId(&message); !ok {
+		return c.JSON(http.StatusBadRequest, "id is required")
+	}
+
+	ctx := c.Request().Context()
+	err := mh.MessageUseCase.UpdateMessage(ctx, message)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+	return c.JSON(http.StatusOK, "Updated")
 }
 
 func isRequestValid(m *model.Message) (bool, error) {
@@ -61,6 +98,10 @@ func isRequestValid(m *model.Message) (bool, error) {
 		return false, err
 	}
 	return true, nil
+}
+
+func isIncludeId(m *model.Message) bool {
+	return m.ID != 0
 }
 
 func StringToUint(s string) (uint, error) {

@@ -25,3 +25,21 @@ func (r *MysqlMessageRepository) PostMessage(ctx context.Context, message model.
 	result := r.db.Create(&message)
 	return result.Error
 }
+
+func (r *MysqlMessageRepository) DeleteMessage(ctx context.Context, messageID uint) error {
+	result := r.db.Delete(&model.Message{}, messageID)
+	return result.Error
+}
+
+func (r *MysqlMessageRepository) UpdateMessage(ctx context.Context, message model.Message) error {
+	// データが有るかどうか確認
+	var count int64
+	r.db.Model(&model.Message{}).Where("id = ?", message.ID).Count(&count)
+	if count == 0 {
+		return gorm.ErrRecordNotFound
+	}
+
+
+	result := r.db.Model(&model.Message{}).Where("id = ?", message.ID).Updates(&message)
+	return result.Error
+}

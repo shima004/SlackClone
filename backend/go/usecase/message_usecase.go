@@ -1,3 +1,5 @@
+//go:generate mockgen -source=$GOFILE -package=mock_$GOPACKAGE -destination=../mock/$GOPACKAGE/$GOFILE
+
 package usecase
 
 import (
@@ -11,6 +13,8 @@ import (
 type MessageUsecase interface {
 	FetchMessages(ctx context.Context, userID uint) (res []model.Message, err error)
 	PostMessage(ctx context.Context, message model.Message) (err error)
+	DeleteMessage(ctx context.Context, messageID uint) (err error)
+	UpdateMessage(ctx context.Context, message model.Message) (err error)
 }
 
 type DefaultMessageUsecase struct {
@@ -28,23 +32,29 @@ func (u *DefaultMessageUsecase) FetchMessages(ctx context.Context, userID uint) 
 		return nil, err
 	}
 
-	var messages []model.Message
-	for _, message := range fetchedMessage {
-		messages = append(messages, model.Message{
-			UserID: message.UserID,
-			Text:   message.Text,
-		})
-	}
-	return messages, nil
+	return fetchedMessage, nil
 }
 
 func (u *DefaultMessageUsecase) PostMessage(ctx context.Context, message model.Message) (err error) {
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeout)
 	defer cancel()
 
-	// message.CreatedAt = time.Now()
-	// message.UpdatedAt = time.Now()
-	
 	err = u.MessageRepository.PostMessage(ctx, message)
+	return err
+}
+
+func (u *DefaultMessageUsecase) DeleteMessage(ctx context.Context, messageID uint) (err error) {
+	ctx, cancel := context.WithTimeout(ctx, u.contextTimeout)
+	defer cancel()
+
+	err = u.MessageRepository.DeleteMessage(ctx, messageID)
+	return err
+}
+
+func (u *DefaultMessageUsecase) UpdateMessage(ctx context.Context, message model.Message) (err error) {
+	ctx, cancel := context.WithTimeout(ctx, u.contextTimeout)
+	defer cancel()
+
+	err = u.MessageRepository.UpdateMessage(ctx, message)
 	return err
 }

@@ -9,23 +9,27 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/golang/mock/gomock"
 	"github.com/labstack/echo/v4"
+	mock_usecase "github.com/shima004/slackclone/mock/usecase"
 	"github.com/shima004/slackclone/model"
-	"github.com/shima004/slackclone/usecase"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 )
 
-func TestFetchMessages(t *testing.T) {
+func TestFetchMessages(t *testing.T) {		
+	mockMessages := []model.Message{
+		{
+			UserID: 453671289,
+			Text:   "test",
+		},
+	}
 	t.Run("FetchMessage", func(t *testing.T) {
-		mockMessageUsecase := new(usecase.MockMessageUsercase)
-		mockMessages := []model.Message{
-			{
-				UserID: 453671289,
-				Text:   "test",
-			},
-		}
-		mockMessageUsecase.On("FetchMessages", mock.Anything, mock.AnythingOfType("uint")).Return(mockMessages, nil)
+		mockctrl := gomock.NewController(t)
+		defer mockctrl.Finish()
+
+		mockMessageUsecase := mock_usecase.NewMockMessageUsecase(mockctrl)
+		mockMessageUsecase.EXPECT().FetchMessages(gomock.Any(), mockMessages[0].UserID).Return(mockMessages, nil).Times(1)
+
 		e := echo.New()
 		req, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, fmt.Sprintf("/api/messages?user_id=%d", mockMessages[0].UserID), nil)
 		assert.NoError(t, err)
@@ -44,23 +48,25 @@ func TestFetchMessages(t *testing.T) {
 		err = json.Unmarshal(rec.Body.Bytes(), &messages)
 		assert.NoError(t, err)
 		assert.Equal(t, mockMessages, messages)
-
-		mockMessageUsecase.AssertExpectations(t)
 	})
 }
 
-func TestPostMessage(t *testing.T) {
+func TestPostMessage(t *testing.T) {		
+	mockMessage := model.Message{
+		UserID:    453671289,
+		Text:      "test",
+		ChannelID: 1,
+	}
 	t.Run("PostMessage", func(t *testing.T) {
-		mockMessageUsecase := new(usecase.MockMessageUsercase)
-		mockMessage := model.Message{
-			UserID:    453671289,
-			Text:      "test",
-			ChannelID: 1,
-		}
+		mockctrl := gomock.NewController(t)
+		defer mockctrl.Finish()
+
+		mockMessageUsecase := mock_usecase.NewMockMessageUsecase(mockctrl)
+		mockMessageUsecase.EXPECT().PostMessage(gomock.Any(), mockMessage).Return(nil).Times(1)
+
 		JSON, err := json.Marshal(mockMessage)
 		assert.NoError(t, err)
 
-		mockMessageUsecase.On("PostMessage", mock.Anything, mock.AnythingOfType("model.Message")).Return(nil).Once()
 		e := echo.New()
 		req, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, "/api/messages", strings.NewReader(string(JSON)))
 		assert.NoError(t, err)
@@ -73,18 +79,21 @@ func TestPostMessage(t *testing.T) {
 		}
 		err = handler.PostMessage(c)
 		assert.NoError(t, err)
-		assert.Equal(t, http.StatusOK, rec.Code)
+		assert.Equal(t, http.StatusCreated, rec.Code)
 
 		var message model.Message
 		err = json.Unmarshal(rec.Body.Bytes(), &message)
 		assert.NoError(t, err)
 		assert.Equal(t, mockMessage, message)
-
-		mockMessageUsecase.AssertExpectations(t)
 	})
 
 	t.Run("should return error when invalid json", func(t *testing.T) {
-		mockMessageUsecase := new(usecase.MockMessageUsercase)
+		mockctrl := gomock.NewController(t)
+		defer mockctrl.Finish()
+
+		mockMessageUsecase := mock_usecase.NewMockMessageUsecase(mockctrl)
+		mockMessageUsecase.EXPECT().PostMessage(gomock.Any(), mockMessage).Return(nil).Times(0)
+
 		mockMessage := model.Message{
 			UserID:    453671289,
 			ChannelID: 1,
@@ -92,7 +101,6 @@ func TestPostMessage(t *testing.T) {
 		JSON, err := json.Marshal(mockMessage)
 		assert.NoError(t, err)
 
-		mockMessageUsecase.On("PostMessage", mock.Anything, mock.AnythingOfType("model.Message")).Return(nil)
 		e := echo.New()
 		req, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, "/api/messages", strings.NewReader(string(JSON)))
 		assert.NoError(t, err)
