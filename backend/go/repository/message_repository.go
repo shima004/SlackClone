@@ -9,8 +9,8 @@ import (
 )
 
 type MessageRepository interface {
-	FetchMessages(context.Context, uint) ([]model.Message, error)
-	PostMessage(context.Context, model.Message) error
-	DeleteMessage(context.Context, uint) error
-	UpdateMessage(context.Context, model.Message) error
+	FetchMessages(ctx context.Context, channelID uint, limit int, offset int) ([]model.Message, error)
+	PostMessage(ctx context.Context, message model.Message) error
+	DeleteMessage(ctx context.Context, messageID uint) error
+	UpdateMessage(ctx context.Context, message model.Message) error
 }
