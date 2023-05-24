@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 	"github.com/shima004/slackclone/model"
 	"github.com/shima004/slackclone/usecase"
@@ -102,20 +101,6 @@ func (mh *MessageHandler) UpdateMessage(c echo.Context) error {
 	return c.JSON(http.StatusOK, "Updated")
 }
 
-func isRequestValid(m *model.Message) (bool, error) {
-	validate := validator.New()
-	err := validate.Struct(m)
-	if err != nil {
-		return false, err
-	}
-	return true, nil
-}
-
 func isIncludeId(m *model.Message) bool {
 	return m.ID != 0
-}
-
-func StringToUint(s string) (uint, error) {
-	u, err := strconv.ParseUint(s, 10, 32)
-	return uint(u), err
 }
