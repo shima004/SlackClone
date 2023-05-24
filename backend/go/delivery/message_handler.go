@@ -23,13 +23,24 @@ func NewMessageHandler(g *echo.Group, mu usecase.MessageUsecase) {
 }
 
 func (mh *MessageHandler) FetchMessages(c echo.Context) error {
-	sUserID := c.QueryParam("user_id")
-	userID, err := StringToUint(sUserID)
+	sChannelID := c.QueryParam("channel_id")
+	channelID, err := StringToUint(sChannelID)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
+	sLimit := c.QueryParam("limit")
+	limit, err := strconv.Atoi(sLimit)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+	sOffset := c.QueryParam("offset")
+	offset, err := strconv.Atoi(sOffset)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+
 	ctx := c.Request().Context()
-	messages, err := mh.MessageUseCase.FetchMessages(ctx, userID)
+	messages, err := mh.MessageUseCase.FetchMessages(ctx, channelID, limit, offset)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, err)
 	}

@@ -21,11 +21,10 @@ func TestGetAllMessages(t *testing.T) {
 		defer mockCtrl.Finish()
 
 		mockRepository := mock_repository.NewMockMessageRepository(mockCtrl)
-		mockRepository.EXPECT().FetchMessages(gomock.Any(), mockMessage.UserID).Return([]model.Message{ mockMessage }, nil).Times(1)
-
+		mockRepository.EXPECT().FetchMessages(gomock.Any(), mockMessage.UserID, 1, 0).Return([]model.Message{mockMessage}, nil).Times(1)
 
 		mu := DefaultMessageUsecase{MessageRepository: mockRepository}
-		list, err := mu.FetchMessages(context.TODO(), uint(453671289))
+		list, err := mu.FetchMessages(context.TODO(), uint(453671289), 1, 0)
 		assert.NoError(t, err)
 		assert.Equal(t, 1, len(list))
 		assert.Equal(t, mockMessage.UserID, list[0].UserID)
@@ -37,19 +36,19 @@ func TestGetAllMessages(t *testing.T) {
 		defer mockCtrl.Finish()
 
 		mockRepository := mock_repository.NewMockMessageRepository(mockCtrl)
-		mockRepository.EXPECT().FetchMessages(gomock.Any(), mockMessage.UserID).Return(nil, errors.New("Unexpected Error")).Times(1)
+		mockRepository.EXPECT().FetchMessages(gomock.Any(), mockMessage.UserID, 1, 0).Return(nil, errors.New("Unexpected Error")).Times(1)
 
 		mu := DefaultMessageUsecase{MessageRepository: mockRepository}
-		list, err := mu.FetchMessages(context.TODO(), uint(453671289))
+		list, err := mu.FetchMessages(context.TODO(), uint(453671289), 1, 0)
 		assert.Error(t, err)
 		assert.Nil(t, list)
 	})
 }
 
-func TestPostMessage(t *testing.T) {		
+func TestPostMessage(t *testing.T) {
 	mockMessage := model.Message{
-		UserID: 453671289,
-		Text:   "Hello World",
+		UserID:    453671289,
+		Text:      "Hello World",
 		ChannelID: 1,
 	}
 	t.Run("should return nil", func(t *testing.T) {

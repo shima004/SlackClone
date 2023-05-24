@@ -26,6 +26,6 @@ func Connect() (*gorm.DB, *sql.DB, error) {
 }
 
 func InitTable(db *gorm.DB, models ...interface{}) {
-	db.Migrator().DropTable(models...)
+	// db.Migrator().DropTable(models...)
 	db.Migrator().AutoMigrate(models...)
 }

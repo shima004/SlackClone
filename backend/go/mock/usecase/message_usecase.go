@@ -50,18 +50,18 @@ func (mr *MockMessageUsecaseMockRecorder) DeleteMessage(ctx, messageID interface
 }
 
 // FetchMessages mocks base method.
-func (m *MockMessageUsecase) FetchMessages(ctx context.Context, userID uint) ([]model.Message, error) {
+func (m *MockMessageUsecase) FetchMessages(ctx context.Context, channelID uint, limit, offset int) ([]model.Message, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FetchMessages", ctx, userID)
+	ret := m.ctrl.Call(m, "FetchMessages", ctx, channelID, limit, offset)
 	ret0, _ := ret[0].([]model.Message)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // FetchMessages indicates an expected call of FetchMessages.
-func (mr *MockMessageUsecaseMockRecorder) FetchMessages(ctx, userID interface{}) *gomock.Call {
+func (mr *MockMessageUsecaseMockRecorder) FetchMessages(ctx, channelID, limit, offset interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchMessages", reflect.TypeOf((*MockMessageUsecase)(nil).FetchMessages), ctx, userID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchMessages", reflect.TypeOf((*MockMessageUsecase)(nil).FetchMessages), ctx, channelID, limit, offset)
 }
 
 // PostMessage mocks base method.

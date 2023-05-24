@@ -11,7 +11,7 @@ import (
 )
 
 type MessageUsecase interface {
-	FetchMessages(ctx context.Context, userID uint) (res []model.Message, err error)
+	FetchMessages(ctx context.Context, channelID uint, limit int, offset int) (res []model.Message, err error)
 	PostMessage(ctx context.Context, message model.Message) (err error)
 	DeleteMessage(ctx context.Context, messageID uint) (err error)
 	UpdateMessage(ctx context.Context, message model.Message) (err error)
@@ -22,11 +22,11 @@ type DefaultMessageUsecase struct {
 	contextTimeout    time.Duration
 }
 
-func (u *DefaultMessageUsecase) FetchMessages(ctx context.Context, userID uint) (res []model.Message, err error) {
+func (u *DefaultMessageUsecase) FetchMessages(ctx context.Context, channelID uint, limit int, offset int) (res []model.Message, err error) {
 	ctx, cancel := context.WithTimeout(ctx, u.contextTimeout)
 	defer cancel()
 
-	fetchedMessage, err := u.MessageRepository.FetchMessages(ctx, userID)
+	fetchedMessage, err := u.MessageRepository.FetchMessages(ctx, channelID, limit, offset)
 
 	if err != nil {
 		return nil, err

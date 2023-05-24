@@ -16,11 +16,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestFetchMessages(t *testing.T) {		
+func TestFetchMessages(t *testing.T) {
 	mockMessages := []model.Message{
 		{
-			UserID: 453671289,
-			Text:   "test",
+			UserID:    453671289,
+			ChannelID: 1,
+			Text:      "test",
 		},
 	}
 	t.Run("FetchMessage", func(t *testing.T) {
@@ -28,10 +29,10 @@ func TestFetchMessages(t *testing.T) {
 		defer mockctrl.Finish()
 
 		mockMessageUsecase := mock_usecase.NewMockMessageUsecase(mockctrl)
-		mockMessageUsecase.EXPECT().FetchMessages(gomock.Any(), mockMessages[0].UserID).Return(mockMessages, nil).Times(1)
+		mockMessageUsecase.EXPECT().FetchMessages(gomock.Any(), mockMessages[0].ChannelID, 1, 0).Return(mockMessages, nil).Times(1)
 
 		e := echo.New()
-		req, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, fmt.Sprintf("/api/messages?user_id=%d", mockMessages[0].UserID), nil)
+		req, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, fmt.Sprintf("/api/messages?channel_id=%d&limit=1&offset=0", mockMessages[0].ChannelID), nil)
 		assert.NoError(t, err)
 
 		rec := httptest.NewRecorder()
@@ -51,7 +52,7 @@ func TestFetchMessages(t *testing.T) {
 	})
 }
 
-func TestPostMessage(t *testing.T) {		
+func TestPostMessage(t *testing.T) {
 	mockMessage := model.Message{
 		UserID:    453671289,
 		Text:      "test",

@@ -36,58 +36,58 @@ func (m *MockMessageRepository) EXPECT() *MockMessageRepositoryMockRecorder {
 }
 
 // DeleteMessage mocks base method.
-func (m *MockMessageRepository) DeleteMessage(arg0 context.Context, arg1 uint) error {
+func (m *MockMessageRepository) DeleteMessage(ctx context.Context, messageID uint) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteMessage", arg0, arg1)
+	ret := m.ctrl.Call(m, "DeleteMessage", ctx, messageID)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // DeleteMessage indicates an expected call of DeleteMessage.
-func (mr *MockMessageRepositoryMockRecorder) DeleteMessage(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockMessageRepositoryMockRecorder) DeleteMessage(ctx, messageID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMessage", reflect.TypeOf((*MockMessageRepository)(nil).DeleteMessage), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMessage", reflect.TypeOf((*MockMessageRepository)(nil).DeleteMessage), ctx, messageID)
 }
 
 // FetchMessages mocks base method.
-func (m *MockMessageRepository) FetchMessages(arg0 context.Context, arg1 uint) ([]model.Message, error) {
+func (m *MockMessageRepository) FetchMessages(ctx context.Context, channelID uint, limit, offset int) ([]model.Message, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FetchMessages", arg0, arg1)
+	ret := m.ctrl.Call(m, "FetchMessages", ctx, channelID, limit, offset)
 	ret0, _ := ret[0].([]model.Message)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // FetchMessages indicates an expected call of FetchMessages.
-func (mr *MockMessageRepositoryMockRecorder) FetchMessages(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockMessageRepositoryMockRecorder) FetchMessages(ctx, channelID, limit, offset interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchMessages", reflect.TypeOf((*MockMessageRepository)(nil).FetchMessages), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchMessages", reflect.TypeOf((*MockMessageRepository)(nil).FetchMessages), ctx, channelID, limit, offset)
 }
 
 // PostMessage mocks base method.
-func (m *MockMessageRepository) PostMessage(arg0 context.Context, arg1 model.Message) error {
+func (m *MockMessageRepository) PostMessage(ctx context.Context, message model.Message) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PostMessage", arg0, arg1)
+	ret := m.ctrl.Call(m, "PostMessage", ctx, message)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // PostMessage indicates an expected call of PostMessage.
-func (mr *MockMessageRepositoryMockRecorder) PostMessage(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockMessageRepositoryMockRecorder) PostMessage(ctx, message interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PostMessage", reflect.TypeOf((*MockMessageRepository)(nil).PostMessage), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PostMessage", reflect.TypeOf((*MockMessageRepository)(nil).PostMessage), ctx, message)
 }
 
 // UpdateMessage mocks base method.
-func (m *MockMessageRepository) UpdateMessage(arg0 context.Context, arg1 model.Message) error {
+func (m *MockMessageRepository) UpdateMessage(ctx context.Context, message model.Message) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateMessage", arg0, arg1)
+	ret := m.ctrl.Call(m, "UpdateMessage", ctx, message)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // UpdateMessage indicates an expected call of UpdateMessage.
-func (mr *MockMessageRepositoryMockRecorder) UpdateMessage(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockMessageRepositoryMockRecorder) UpdateMessage(ctx, message interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateMessage", reflect.TypeOf((*MockMessageRepository)(nil).UpdateMessage), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateMessage", reflect.TypeOf((*MockMessageRepository)(nil).UpdateMessage), ctx, message)
 }
