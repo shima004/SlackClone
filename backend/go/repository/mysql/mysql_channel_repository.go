@@ -15,8 +15,7 @@ func NewMysqlChannelRepository(conn *gorm.DB) *mysqlChannelRepository {
 	return &mysqlChannelRepository{Conn: conn}
 }
 
-func (m *mysqlChannelRepository) CreateChannel(ctx context.Context, name string) (uint, error) {
-	channel := model.Channel{Name: name}
+func (m *mysqlChannelRepository) CreateChannel(ctx context.Context, channel *model.Channel) (uint, error) {
 	result := m.Conn.Create(&channel)
 	return channel.ID, result.Error
 }
