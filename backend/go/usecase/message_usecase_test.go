@@ -81,3 +81,21 @@ func TestDeleteMessage(t *testing.T) {
 		assert.NoError(t, err)
 	})
 }
+
+func TestUpdateMessage(t *testing.T) {
+	mockMessage := model.Message{
+		UserID: 453671289,
+		Text:   "Hello World",
+	}
+	t.Run("should return nil", func(t *testing.T) {
+		mockCtrl := gomock.NewController(t)
+		defer mockCtrl.Finish()
+
+		mockRepository := mock_repository.NewMockMessageRepository(mockCtrl)
+		mockRepository.EXPECT().UpdateMessage(gomock.Any(), mockMessage).Return(nil).Times(1)
+
+		mu := DefaultMessageUsecase{MessageRepository: mockRepository}
+		err := mu.UpdateMessage(context.Background(), mockMessage)
+		assert.NoError(t, err)
+	})
+}
