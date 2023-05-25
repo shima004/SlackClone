@@ -22,9 +22,11 @@ jobs:
 
       - name: Go lint
         uses: golangci/golangci-lint-action@v3
+        working-directory: ./go
 
       - name: Setup Go Packages
         run: go install github.com/golang/mock/mockgen@latest
+        working-directory: ./go
 
       - name: Generate Mocks
         run: |
