@@ -27,22 +27,18 @@ jobs:
 
       - name: Setup Go Packages
         run: go install github.com/golang/mock/mockgen@latest
-        with:
-          working-directory: ./go
+        working-directory: ./go
 
       - name: Generate Mocks
         run: |
           rm -rf mock
           go generate ./...
-        with:
-          working-directory: ./go
+        working-directory: ./go
 
       - name: Go Build
         run: go build -v ./...
-        with:
-          working-directory: ./go
+        working-directory: ./go
 
       - name: Go Test
         run: go test -v ./...
-        with:
-          working-directory: ./go
+        working-directory: ./go
