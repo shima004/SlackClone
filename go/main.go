@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"github.com/labstack/echo/v4"
 	"github.com/shima004/slackclone/delivery"
 	repo "github.com/shima004/slackclone/repository/mysql"
@@ -16,9 +18,12 @@ func main() {
 
 	e := echo.New()
 	g := e.Group("/api")
-	repo := repo.NewMysqlMessageRepository(db)
-	mu := usecase.DefaultMessageUsecase{MessageRepository: repo}
+	mRepo := repo.NewMysqlMessageRepository(db)
+	cRepo := repo.NewMysqlChannelRepository(db)
+	mu := usecase.DefaultMessageUsecase{MessageRepository: mRepo, ChannelRepository: cRepo, ContextTimeout: 10 * time.Second}
+	cu := usecase.DefaultChannelUsecase{ChannelRepository: cRepo, ContextTimeout: 10 * time.Second}
 	delivery.NewMessageHandler(g, &mu)
+	delivery.NewChannelHandler(g, &cu)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
