@@ -21,7 +21,7 @@ func Connect() (*gorm.DB, *sql.DB, error) {
 		return nil, nil, err
 	}
 
-	InitTable(db, &model.Message{})
+	InitTable(db, &model.Message{}, &model.Channel{})
 	return db, sqlDB, nil
 }
 
