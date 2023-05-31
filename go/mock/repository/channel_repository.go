@@ -63,3 +63,18 @@ func (mr *MockChannelRepositoryMockRecorder) DeleteChannel(ctx, channelID interf
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteChannel", reflect.TypeOf((*MockChannelRepository)(nil).DeleteChannel), ctx, channelID)
 }
+
+// FetchChannel mocks base method.
+func (m *MockChannelRepository) FetchChannel(ctx context.Context, channelID uint) (*model.Channel, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FetchChannel", ctx, channelID)
+	ret0, _ := ret[0].(*model.Channel)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FetchChannel indicates an expected call of FetchChannel.
+func (mr *MockChannelRepositoryMockRecorder) FetchChannel(ctx, channelID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchChannel", reflect.TypeOf((*MockChannelRepository)(nil).FetchChannel), ctx, channelID)
+}

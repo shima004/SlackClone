@@ -55,10 +55,13 @@ func TestPostMessage(t *testing.T) {
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 
-		mockRepository := mock_repository.NewMockMessageRepository(mockCtrl)
-		mockRepository.EXPECT().PostMessage(gomock.Any(), mockMessage).Return(nil).Times(1)
+		mockMRepository := mock_repository.NewMockMessageRepository(mockCtrl)
+		mockMRepository.EXPECT().PostMessage(gomock.Any(), mockMessage).Return(nil).Times(1)
 
-		mu := DefaultMessageUsecase{MessageRepository: mockRepository}
+		mockCRepository := mock_repository.NewMockChannelRepository(mockCtrl)
+		mockCRepository.EXPECT().FetchChannel(gomock.Any(), mockMessage.ChannelID).Return(&model.Channel{}, nil).Times(1)
+
+		mu := DefaultMessageUsecase{MessageRepository: mockMRepository, ChannelRepository: mockCRepository}
 		err := mu.PostMessage(context.Background(), mockMessage)
 		assert.NoError(t, err)
 	})

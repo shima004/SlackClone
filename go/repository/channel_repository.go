@@ -11,4 +11,5 @@ import (
 type ChannelRepository interface {
 	CreateChannel(ctx context.Context, channel *model.Channel) (uint, error)
 	DeleteChannel(ctx context.Context, channelID uint) error
+	FetchChannel(ctx context.Context, channelID uint) (*model.Channel, error)
 }

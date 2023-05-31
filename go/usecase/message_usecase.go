@@ -19,11 +19,12 @@ type MessageUsecase interface {
 
 type DefaultMessageUsecase struct {
 	MessageRepository repository.MessageRepository
-	contextTimeout    time.Duration
+	ChannelRepository repository.ChannelRepository
+	ContextTimeout    time.Duration
 }
 
 func (u *DefaultMessageUsecase) FetchMessages(ctx context.Context, channelID uint, limit int, offset int) (res []model.Message, err error) {
-	ctx, cancel := context.WithTimeout(ctx, u.contextTimeout)
+	ctx, cancel := context.WithTimeout(ctx, u.ContextTimeout)
 	defer cancel()
 
 	fetchedMessage, err := u.MessageRepository.FetchMessages(ctx, channelID, limit, offset)
@@ -36,15 +37,21 @@ func (u *DefaultMessageUsecase) FetchMessages(ctx context.Context, channelID uin
 }
 
 func (u *DefaultMessageUsecase) PostMessage(ctx context.Context, message model.Message) (err error) {
-	ctx, cancel := context.WithTimeout(ctx, u.contextTimeout)
+	ctx, cancel := context.WithTimeout(ctx, u.ContextTimeout)
 	defer cancel()
+
+	// Check if channel exists
+	_, err = u.ChannelRepository.FetchChannel(ctx, message.ChannelID)
+	if err != nil {
+		return err
+	}
 
 	err = u.MessageRepository.PostMessage(ctx, message)
 	return err
 }
 
 func (u *DefaultMessageUsecase) DeleteMessage(ctx context.Context, messageID uint) (err error) {
-	ctx, cancel := context.WithTimeout(ctx, u.contextTimeout)
+	ctx, cancel := context.WithTimeout(ctx, u.ContextTimeout)
 	defer cancel()
 
 	err = u.MessageRepository.DeleteMessage(ctx, messageID)
@@ -52,7 +59,7 @@ func (u *DefaultMessageUsecase) DeleteMessage(ctx context.Context, messageID uin
 }
 
 func (u *DefaultMessageUsecase) UpdateMessage(ctx context.Context, message model.Message) (err error) {
-	ctx, cancel := context.WithTimeout(ctx, u.contextTimeout)
+	ctx, cancel := context.WithTimeout(ctx, u.ContextTimeout)
 	defer cancel()
 
 	err = u.MessageRepository.UpdateMessage(ctx, message)

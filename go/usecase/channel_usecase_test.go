@@ -24,7 +24,7 @@ func TestCreateChannel(t *testing.T) {
 
 		mu := &DefaultChannelUsecase{
 			ChannelRepository: mockRepository,
-			contextTimeout:    5,
+			ContextTimeout:    5,
 		}
 
 		id, err := mu.CreateChannel(context.TODO(), &mockChannel)
@@ -47,7 +47,7 @@ func TestDeleteChannel(t *testing.T) {
 
 		mu := &DefaultChannelUsecase{
 			ChannelRepository: mockRepository,
-			contextTimeout:    5,
+			ContextTimeout:    5,
 		}
 
 		err := mu.DeleteChannel(context.TODO(), mockChannel.ID)
