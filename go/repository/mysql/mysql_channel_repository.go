@@ -7,20 +7,20 @@ import (
 	"gorm.io/gorm"
 )
 
-type mysqlChannelRepository struct {
+type MysqlChannelRepository struct {
 	Conn *gorm.DB
 }
 
-func NewMysqlChannelRepository(conn *gorm.DB) *mysqlChannelRepository {
-	return &mysqlChannelRepository{Conn: conn}
+func NewMysqlChannelRepository(conn *gorm.DB) *MysqlChannelRepository {
+	return &MysqlChannelRepository{Conn: conn}
 }
 
-func (m *mysqlChannelRepository) CreateChannel(ctx context.Context, channel *model.Channel) (uint, error) {
+func (m *MysqlChannelRepository) CreateChannel(ctx context.Context, channel *model.Channel) (uint, error) {
 	result := m.Conn.Create(&channel)
 	return channel.ID, result.Error
 }
 
-func (m *mysqlChannelRepository) DeleteChannel(ctx context.Context, channelID uint) error {
+func (m *MysqlChannelRepository) DeleteChannel(ctx context.Context, channelID uint) error {
 	result := m.Conn.Delete(&model.Channel{}, channelID)
 	if result.Error != nil {
 		return result.Error
@@ -34,7 +34,7 @@ func (m *mysqlChannelRepository) DeleteChannel(ctx context.Context, channelID ui
 	return nil
 }
 
-func (m *mysqlChannelRepository) FetchChannel(ctx context.Context, channelID uint) (*model.Channel, error) {
+func (m *MysqlChannelRepository) FetchChannel(ctx context.Context, channelID uint) (*model.Channel, error) {
 	channel := &model.Channel{}
 	// チャンネルが存在するか確認
 	var count int64
