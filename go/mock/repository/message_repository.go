@@ -9,7 +9,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
-	model "github.com/shima004/slackclone/model"
+	entities "github.com/shima004/slackclone/entities"
 )
 
 // MockMessageRepository is a mock of MessageRepository interface.
@@ -50,10 +50,10 @@ func (mr *MockMessageRepositoryMockRecorder) DeleteMessage(ctx, messageID interf
 }
 
 // FetchMessages mocks base method.
-func (m *MockMessageRepository) FetchMessages(ctx context.Context, channelID uint, limit, offset int) ([]model.Message, error) {
+func (m *MockMessageRepository) FetchMessages(ctx context.Context, channelID uint, limit, offset int) ([]entities.Message, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FetchMessages", ctx, channelID, limit, offset)
-	ret0, _ := ret[0].([]model.Message)
+	ret0, _ := ret[0].([]entities.Message)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -65,7 +65,7 @@ func (mr *MockMessageRepositoryMockRecorder) FetchMessages(ctx, channelID, limit
 }
 
 // PostMessage mocks base method.
-func (m *MockMessageRepository) PostMessage(ctx context.Context, message model.Message) error {
+func (m *MockMessageRepository) PostMessage(ctx context.Context, message entities.Message) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PostMessage", ctx, message)
 	ret0, _ := ret[0].(error)
@@ -79,7 +79,7 @@ func (mr *MockMessageRepositoryMockRecorder) PostMessage(ctx, message interface{
 }
 
 // UpdateMessage mocks base method.
-func (m *MockMessageRepository) UpdateMessage(ctx context.Context, message model.Message) error {
+func (m *MockMessageRepository) UpdateMessage(ctx context.Context, message entities.Message) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateMessage", ctx, message)
 	ret0, _ := ret[0].(error)

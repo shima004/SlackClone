@@ -5,12 +5,12 @@ package repository
 import (
 	"context"
 
-	"github.com/shima004/slackclone/model"
+	"github.com/shima004/slackclone/entities"
 )
 
 type UserRepository interface {
-	CreateUser(ctx context.Context, user model.User) error
+	CreateUser(ctx context.Context, user entities.User) error
 	DeleteUser(ctx context.Context, userID uint) error
-	// UpdateUser(ctx context.Context, user model.User) error
+	// UpdateUser(ctx context.Context, user entities.User) error
 	FetchUserPassword(ctx context.Context, email string) (string, error)
 }

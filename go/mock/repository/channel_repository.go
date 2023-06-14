@@ -9,7 +9,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
-	model "github.com/shima004/slackclone/model"
+	entities "github.com/shima004/slackclone/entities"
 )
 
 // MockChannelRepository is a mock of ChannelRepository interface.
@@ -36,7 +36,7 @@ func (m *MockChannelRepository) EXPECT() *MockChannelRepositoryMockRecorder {
 }
 
 // CreateChannel mocks base method.
-func (m *MockChannelRepository) CreateChannel(ctx context.Context, channel *model.Channel) (uint, error) {
+func (m *MockChannelRepository) CreateChannel(ctx context.Context, channel *entities.Channel) (uint, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateChannel", ctx, channel)
 	ret0, _ := ret[0].(uint)
@@ -65,10 +65,10 @@ func (mr *MockChannelRepositoryMockRecorder) DeleteChannel(ctx, channelID interf
 }
 
 // FetchChannel mocks base method.
-func (m *MockChannelRepository) FetchChannel(ctx context.Context, channelID uint) (*model.Channel, error) {
+func (m *MockChannelRepository) FetchChannel(ctx context.Context, channelID uint) (*entities.Channel, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FetchChannel", ctx, channelID)
-	ret0, _ := ret[0].(*model.Channel)
+	ret0, _ := ret[0].(*entities.Channel)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

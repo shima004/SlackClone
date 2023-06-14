@@ -5,13 +5,13 @@ import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
+	"github.com/shima004/slackclone/entities"
 	mock_repository "github.com/shima004/slackclone/mock/repository"
-	"github.com/shima004/slackclone/model"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateChannel(t *testing.T) {
-	mockChannel := model.Channel{
+	mockChannel := entities.Channel{
 		Name: "test",
 	}
 	mockChannel.ID = 1
@@ -34,7 +34,7 @@ func TestCreateChannel(t *testing.T) {
 }
 
 func TestDeleteChannel(t *testing.T) {
-	mockChannel := model.Channel{
+	mockChannel := entities.Channel{
 		Name: "test",
 	}
 	mockChannel.ID = 1

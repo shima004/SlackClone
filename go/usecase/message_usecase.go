@@ -6,15 +6,15 @@ import (
 	"context"
 	"time"
 
-	"github.com/shima004/slackclone/model"
+	"github.com/shima004/slackclone/entities"
 	"github.com/shima004/slackclone/repository"
 )
 
 type MessageUsecase interface {
-	FetchMessages(ctx context.Context, channelID uint, limit int, offset int) (res []model.Message, err error)
-	PostMessage(ctx context.Context, message model.Message) (err error)
+	FetchMessages(ctx context.Context, channelID uint, limit int, offset int) (res []entities.Message, err error)
+	PostMessage(ctx context.Context, message entities.Message) (err error)
 	DeleteMessage(ctx context.Context, messageID uint) (err error)
-	UpdateMessage(ctx context.Context, message model.Message) (err error)
+	UpdateMessage(ctx context.Context, message entities.Message) (err error)
 }
 
 type DefaultMessageUsecase struct {
@@ -23,7 +23,7 @@ type DefaultMessageUsecase struct {
 	ContextTimeout    time.Duration
 }
 
-func (u *DefaultMessageUsecase) FetchMessages(ctx context.Context, channelID uint, limit int, offset int) (res []model.Message, err error) {
+func (u *DefaultMessageUsecase) FetchMessages(ctx context.Context, channelID uint, limit int, offset int) (res []entities.Message, err error) {
 	ctx, cancel := context.WithTimeout(ctx, u.ContextTimeout)
 	defer cancel()
 
@@ -36,7 +36,7 @@ func (u *DefaultMessageUsecase) FetchMessages(ctx context.Context, channelID uin
 	return fetchedMessage, nil
 }
 
-func (u *DefaultMessageUsecase) PostMessage(ctx context.Context, message model.Message) (err error) {
+func (u *DefaultMessageUsecase) PostMessage(ctx context.Context, message entities.Message) (err error) {
 	ctx, cancel := context.WithTimeout(ctx, u.ContextTimeout)
 	defer cancel()
 
@@ -58,7 +58,7 @@ func (u *DefaultMessageUsecase) DeleteMessage(ctx context.Context, messageID uin
 	return err
 }
 
-func (u *DefaultMessageUsecase) UpdateMessage(ctx context.Context, message model.Message) (err error) {
+func (u *DefaultMessageUsecase) UpdateMessage(ctx context.Context, message entities.Message) (err error) {
 	ctx, cancel := context.WithTimeout(ctx, u.ContextTimeout)
 	defer cancel()
 

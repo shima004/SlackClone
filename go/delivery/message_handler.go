@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
-	"github.com/shima004/slackclone/model"
+	"github.com/shima004/slackclone/entities"
 	"github.com/shima004/slackclone/usecase"
 )
 
@@ -48,7 +48,7 @@ func (mh *MessageHandler) FetchMessages(c echo.Context) error {
 }
 
 func (mh *MessageHandler) PostMessage(c echo.Context) error {
-	var message model.Message
+	var message entities.Message
 	if err := c.Bind(&message); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, err)
 	}
@@ -80,7 +80,7 @@ func (mh *MessageHandler) DeleteMessage(c echo.Context) error {
 }
 
 func (mh *MessageHandler) UpdateMessage(c echo.Context) error {
-	var message model.Message
+	var message entities.Message
 	if err := c.Bind(&message); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, err)
 	}
@@ -101,6 +101,6 @@ func (mh *MessageHandler) UpdateMessage(c echo.Context) error {
 	return c.JSON(http.StatusOK, "Updated")
 }
 
-func isIncludeId(m *model.Message) bool {
+func isIncludeId(m *entities.Message) bool {
 	return m.ID != 0
 }

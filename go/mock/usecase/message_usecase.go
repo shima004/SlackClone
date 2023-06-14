@@ -9,7 +9,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
-	model "github.com/shima004/slackclone/model"
+	entities "github.com/shima004/slackclone/entities"
 )
 
 // MockMessageUsecase is a mock of MessageUsecase interface.
@@ -50,10 +50,10 @@ func (mr *MockMessageUsecaseMockRecorder) DeleteMessage(ctx, messageID interface
 }
 
 // FetchMessages mocks base method.
-func (m *MockMessageUsecase) FetchMessages(ctx context.Context, channelID uint, limit, offset int) ([]model.Message, error) {
+func (m *MockMessageUsecase) FetchMessages(ctx context.Context, channelID uint, limit, offset int) ([]entities.Message, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FetchMessages", ctx, channelID, limit, offset)
-	ret0, _ := ret[0].([]model.Message)
+	ret0, _ := ret[0].([]entities.Message)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -65,7 +65,7 @@ func (mr *MockMessageUsecaseMockRecorder) FetchMessages(ctx, channelID, limit, o
 }
 
 // PostMessage mocks base method.
-func (m *MockMessageUsecase) PostMessage(ctx context.Context, message model.Message) error {
+func (m *MockMessageUsecase) PostMessage(ctx context.Context, message entities.Message) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PostMessage", ctx, message)
 	ret0, _ := ret[0].(error)
@@ -79,7 +79,7 @@ func (mr *MockMessageUsecaseMockRecorder) PostMessage(ctx, message interface{}) 
 }
 
 // UpdateMessage mocks base method.
-func (m *MockMessageUsecase) UpdateMessage(ctx context.Context, message model.Message) error {
+func (m *MockMessageUsecase) UpdateMessage(ctx context.Context, message entities.Message) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateMessage", ctx, message)
 	ret0, _ := ret[0].(error)

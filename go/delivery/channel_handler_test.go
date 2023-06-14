@@ -11,13 +11,13 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/labstack/echo/v4"
+	"github.com/shima004/slackclone/entities"
 	mock_usecase "github.com/shima004/slackclone/mock/usecase"
-	"github.com/shima004/slackclone/model"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPostChannel(t *testing.T) {
-	mockChannel := model.Channel{
+	mockChannel := entities.Channel{
 		Name: "test",
 	}
 
@@ -76,7 +76,7 @@ func TestPostChannel(t *testing.T) {
 
 		mockChannelUsecase := mock_usecase.NewMockChannelUsecase(mockCtrl)
 		mockChannelUsecase.EXPECT().CreateChannel(gomock.Any(), &mockChannel).Return(uint(1), nil).Times(0)
-		JSON, err := json.Marshal(model.Channel{})
+		JSON, err := json.Marshal(entities.Channel{})
 		assert.NoError(t, err)
 
 		e := echo.New()

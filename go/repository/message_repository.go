@@ -5,12 +5,12 @@ package repository
 import (
 	"context"
 
-	"github.com/shima004/slackclone/model"
+	"github.com/shima004/slackclone/entities"
 )
 
 type MessageRepository interface {
-	FetchMessages(ctx context.Context, channelID uint, limit int, offset int) ([]model.Message, error)
-	PostMessage(ctx context.Context, message model.Message) error
+	FetchMessages(ctx context.Context, channelID uint, limit int, offset int) ([]entities.Message, error)
+	PostMessage(ctx context.Context, message entities.Message) error
 	DeleteMessage(ctx context.Context, messageID uint) error
-	UpdateMessage(ctx context.Context, message model.Message) error
+	UpdateMessage(ctx context.Context, message entities.Message) error
 }

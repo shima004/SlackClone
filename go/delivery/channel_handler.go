@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/shima004/slackclone/model"
+	"github.com/shima004/slackclone/entities"
 	"github.com/shima004/slackclone/usecase"
 )
 
@@ -19,7 +19,7 @@ func NewChannelHandler(g *echo.Group, cu usecase.ChannelUsecase) {
 }
 
 func (ch *ChannelHandler) CreateChannel(c echo.Context) error {
-	var channel model.Channel
+	var channel entities.Channel
 	if err := c.Bind(&channel); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, err)
 	}

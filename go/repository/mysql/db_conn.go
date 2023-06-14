@@ -4,7 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/shima004/slackclone/config"
-	"github.com/shima004/slackclone/model"
+	"github.com/shima004/slackclone/entities"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -21,13 +21,13 @@ func Connect() (*gorm.DB, *sql.DB, error) {
 		return nil, nil, err
 	}
 
-	InitTable(db, &model.Message{}, &model.Channel{})
+	InitTable(db, &entities.Message{}, &entities.Channel{})
 	return db, sqlDB, nil
 }
 
-func InitTable(db *gorm.DB, models ...interface{}) {
-	// db.Migrator().DropTable(models...)
-	err := db.AutoMigrate(models...)
+func InitTable(db *gorm.DB, entitiess ...interface{}) {
+	// db.Migrator().DropTable(entitiess...)
+	err := db.AutoMigrate(entitiess...)
 	if err != nil {
 		panic(err)
 	}

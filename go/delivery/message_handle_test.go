@@ -11,13 +11,13 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/labstack/echo/v4"
+	"github.com/shima004/slackclone/entities"
 	mock_usecase "github.com/shima004/slackclone/mock/usecase"
-	"github.com/shima004/slackclone/model"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestFetchMessages(t *testing.T) {
-	mockMessages := []model.Message{
+	mockMessages := []entities.Message{
 		{
 			UserID:    453671289,
 			ChannelID: 1,
@@ -45,7 +45,7 @@ func TestFetchMessages(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, rec.Code)
 
-		var messages []model.Message
+		var messages []entities.Message
 		err = json.Unmarshal(rec.Body.Bytes(), &messages)
 		assert.NoError(t, err)
 		assert.Equal(t, mockMessages, messages)
@@ -53,7 +53,7 @@ func TestFetchMessages(t *testing.T) {
 }
 
 func TestPostMessage(t *testing.T) {
-	mockMessage := model.Message{
+	mockMessage := entities.Message{
 		UserID:    453671289,
 		Text:      "test",
 		ChannelID: 1,
@@ -82,7 +82,7 @@ func TestPostMessage(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusCreated, rec.Code)
 
-		var message model.Message
+		var message entities.Message
 		err = json.Unmarshal(rec.Body.Bytes(), &message)
 		assert.NoError(t, err)
 		assert.Equal(t, mockMessage, message)
@@ -95,7 +95,7 @@ func TestPostMessage(t *testing.T) {
 		mockMessageUsecase := mock_usecase.NewMockMessageUsecase(mockctrl)
 		mockMessageUsecase.EXPECT().PostMessage(gomock.Any(), mockMessage).Return(nil).Times(0)
 
-		mockMessage := model.Message{
+		mockMessage := entities.Message{
 			UserID:    453671289,
 			ChannelID: 1,
 		}

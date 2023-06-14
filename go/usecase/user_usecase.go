@@ -4,14 +4,14 @@ import (
 	"context"
 	"time"
 
-	"github.com/shima004/slackclone/model"
+	"github.com/shima004/slackclone/entities"
 	"github.com/shima004/slackclone/repository"
 )
 
 type UserUsecase interface {
-	CreateUser(ctx context.Context, user model.User) error
+	CreateUser(ctx context.Context, user entities.User) error
 	DeleteUser(ctx context.Context, userID uint) error
-	// UpdateUser(ctx context.Context, user model.User) error
+	// UpdateUser(ctx context.Context, user entities.User) error
 	Login(ctx context.Context, email string, password string) (string, error)
 }
 
@@ -20,7 +20,7 @@ type DefaultUserUsecase struct {
 	ContextTimeout time.Duration
 }
 
-func (u *DefaultUserUsecase) CreateUser(ctx context.Context, user model.User) error {
+func (u *DefaultUserUsecase) CreateUser(ctx context.Context, user entities.User) error {
 	ctx, cancel := context.WithTimeout(ctx, u.ContextTimeout)
 	defer cancel()
 

@@ -6,14 +6,14 @@ import (
 	"context"
 	"time"
 
-	"github.com/shima004/slackclone/model"
+	"github.com/shima004/slackclone/entities"
 	"github.com/shima004/slackclone/repository"
 )
 
 type ChannelUsecase interface {
-	CreateChannel(ctx context.Context, channel *model.Channel) (uint, error)
+	CreateChannel(ctx context.Context, channel *entities.Channel) (uint, error)
 	DeleteChannel(ctx context.Context, channelID uint) error
-	FetchChannel(ctx context.Context, channelID uint) (*model.Channel, error)
+	FetchChannel(ctx context.Context, channelID uint) (*entities.Channel, error)
 }
 
 type DefaultChannelUsecase struct {
@@ -21,7 +21,7 @@ type DefaultChannelUsecase struct {
 	ContextTimeout    time.Duration
 }
 
-func (u *DefaultChannelUsecase) CreateChannel(ctx context.Context, channel *model.Channel) (uint, error) {
+func (u *DefaultChannelUsecase) CreateChannel(ctx context.Context, channel *entities.Channel) (uint, error) {
 	ctx, cancel := context.WithTimeout(ctx, u.ContextTimeout)
 	defer cancel()
 
@@ -37,7 +37,7 @@ func (u *DefaultChannelUsecase) DeleteChannel(ctx context.Context, channelID uin
 	return err
 }
 
-func (u *DefaultChannelUsecase) FetchChannel(ctx context.Context, channelID uint) (*model.Channel, error) {
+func (u *DefaultChannelUsecase) FetchChannel(ctx context.Context, channelID uint) (*entities.Channel, error) {
 	ctx, cancel := context.WithTimeout(ctx, u.ContextTimeout)
 	defer cancel()
 

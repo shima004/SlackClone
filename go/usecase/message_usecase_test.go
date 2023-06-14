@@ -6,13 +6,13 @@ import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
+	"github.com/shima004/slackclone/entities"
 	mock_repository "github.com/shima004/slackclone/mock/repository"
-	"github.com/shima004/slackclone/model"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGetAllMessages(t *testing.T) {
-	mockMessage := model.Message{
+	mockMessage := entities.Message{
 		UserID: 453671289,
 		Text:   "Hello World",
 	}
@@ -21,7 +21,7 @@ func TestGetAllMessages(t *testing.T) {
 		defer mockCtrl.Finish()
 
 		mockRepository := mock_repository.NewMockMessageRepository(mockCtrl)
-		mockRepository.EXPECT().FetchMessages(gomock.Any(), mockMessage.UserID, 1, 0).Return([]model.Message{mockMessage}, nil).Times(1)
+		mockRepository.EXPECT().FetchMessages(gomock.Any(), mockMessage.UserID, 1, 0).Return([]entities.Message{mockMessage}, nil).Times(1)
 
 		mu := DefaultMessageUsecase{MessageRepository: mockRepository}
 		list, err := mu.FetchMessages(context.TODO(), uint(453671289), 1, 0)
@@ -46,7 +46,7 @@ func TestGetAllMessages(t *testing.T) {
 }
 
 func TestPostMessage(t *testing.T) {
-	mockMessage := model.Message{
+	mockMessage := entities.Message{
 		UserID:    453671289,
 		Text:      "Hello World",
 		ChannelID: 1,
@@ -59,7 +59,7 @@ func TestPostMessage(t *testing.T) {
 		mockMRepository.EXPECT().PostMessage(gomock.Any(), mockMessage).Return(nil).Times(1)
 
 		mockCRepository := mock_repository.NewMockChannelRepository(mockCtrl)
-		mockCRepository.EXPECT().FetchChannel(gomock.Any(), mockMessage.ChannelID).Return(&model.Channel{}, nil).Times(1)
+		mockCRepository.EXPECT().FetchChannel(gomock.Any(), mockMessage.ChannelID).Return(&entities.Channel{}, nil).Times(1)
 
 		mu := DefaultMessageUsecase{MessageRepository: mockMRepository, ChannelRepository: mockCRepository}
 		err := mu.PostMessage(context.Background(), mockMessage)
@@ -68,7 +68,7 @@ func TestPostMessage(t *testing.T) {
 }
 
 func TestDeleteMessage(t *testing.T) {
-	mockMessage := model.Message{
+	mockMessage := entities.Message{
 		UserID: 453671289,
 		Text:   "Hello World",
 	}
@@ -86,7 +86,7 @@ func TestDeleteMessage(t *testing.T) {
 }
 
 func TestUpdateMessage(t *testing.T) {
-	mockMessage := model.Message{
+	mockMessage := entities.Message{
 		UserID: 453671289,
 		Text:   "Hello World",
 	}
