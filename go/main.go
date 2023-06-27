@@ -2,13 +2,13 @@ package main
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/shima004/slackclone/controllers/web/handler"
-	"github.com/shima004/slackclone/frameworks/web/router"
-	"github.com/shima004/slackclone/gateways/datasource/mysqlimpl"
-	sqlDB "github.com/shima004/slackclone/gateways/infra"
-	"github.com/shima004/slackclone/gateways/repository/channel"
-	"github.com/shima004/slackclone/gateways/repository/message"
-	"github.com/shima004/slackclone/usecases/interactor"
+	"github.com/shima004/chat-server/controllers/web/handler"
+	"github.com/shima004/chat-server/frameworks/web/router"
+	"github.com/shima004/chat-server/gateways/datasource/mysqlimpl"
+	sqlDB "github.com/shima004/chat-server/gateways/infra"
+	"github.com/shima004/chat-server/gateways/repository/channel"
+	"github.com/shima004/chat-server/gateways/repository/message"
+	"github.com/shima004/chat-server/usecases/interactor"
 )
 
 func main() {

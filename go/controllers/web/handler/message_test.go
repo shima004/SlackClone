@@ -11,13 +11,14 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/labstack/echo/v4"
-	"github.com/shima004/slackclone/controllers/web/handler"
-	"github.com/shima004/slackclone/entities"
-	mock_inputport "github.com/shima004/slackclone/mock/inputport"
+	"github.com/shima004/chat-server/controllers/web/handler"
+	"github.com/shima004/chat-server/entities"
+	mock_inputport "github.com/shima004/chat-server/mock/inputport"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestFetchMessages(t *testing.T) {
+	t.Parallel()
 	mockMessages := []*entities.Message{
 		{
 			UserID:    453671289,
@@ -26,6 +27,7 @@ func TestFetchMessages(t *testing.T) {
 		},
 	}
 	t.Run("FetchMessage", func(t *testing.T) {
+		t.Parallel()
 		mockctrl := gomock.NewController(t)
 		defer mockctrl.Finish()
 
@@ -52,12 +54,14 @@ func TestFetchMessages(t *testing.T) {
 }
 
 func TestPostMessage(t *testing.T) {
+	t.Parallel()
 	mockMessage := entities.Message{
 		UserID:    453671289,
 		Text:      "test",
 		ChannelID: 1,
 	}
 	t.Run("PostMessage", func(t *testing.T) {
+		t.Parallel()
 		mockctrl := gomock.NewController(t)
 		defer mockctrl.Finish()
 
@@ -86,6 +90,7 @@ func TestPostMessage(t *testing.T) {
 	})
 
 	t.Run("should return error when invalid json", func(t *testing.T) {
+		t.Parallel()
 		mockctrl := gomock.NewController(t)
 		defer mockctrl.Finish()
 

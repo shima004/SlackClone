@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/shima004/slackclone/entities"
-	"github.com/shima004/slackclone/usecases/inputport"
-	"github.com/shima004/slackclone/utility"
+	"github.com/shima004/chat-server/entities"
+	"github.com/shima004/chat-server/usecases/inputport"
+	"github.com/shima004/chat-server/utility"
 )
 
 type MessageHandler struct {

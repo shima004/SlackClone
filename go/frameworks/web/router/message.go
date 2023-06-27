@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/shima004/slackclone/frameworks/web/handler"
+	"github.com/shima004/chat-server/frameworks/web/handler"
 )
 
 type MessageRouter struct {

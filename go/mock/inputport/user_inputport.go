@@ -9,7 +9,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
-	entities "github.com/shima004/slackclone/entities"
+	entities "github.com/shima004/chat-server/entities"
 )
 
 // MockUserUsecase is a mock of UserUsecase interface.

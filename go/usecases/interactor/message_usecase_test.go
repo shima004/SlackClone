@@ -6,17 +6,20 @@ import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
-	"github.com/shima004/slackclone/entities"
-	mock_repository "github.com/shima004/slackclone/mock/repository"
+	"github.com/shima004/chat-server/entities"
+	mock_repository "github.com/shima004/chat-server/mock/repository"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGetAllMessages(t *testing.T) {
+	t.Parallel()
 	mockMessage := entities.Message{
 		UserID: 453671289,
 		Text:   "Hello World",
 	}
+
 	t.Run("should return messagess", func(t *testing.T) {
+		t.Parallel()
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 
@@ -32,6 +35,7 @@ func TestGetAllMessages(t *testing.T) {
 	})
 
 	t.Run("should return error", func(t *testing.T) {
+		t.Parallel()
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 
@@ -46,12 +50,14 @@ func TestGetAllMessages(t *testing.T) {
 }
 
 func TestPostMessage(t *testing.T) {
+	t.Parallel()
 	mockMessage := entities.Message{
 		UserID:    453671289,
 		Text:      "Hello World",
 		ChannelID: 1,
 	}
 	t.Run("should return nil", func(t *testing.T) {
+		t.Parallel()
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 
@@ -68,11 +74,13 @@ func TestPostMessage(t *testing.T) {
 }
 
 func TestDeleteMessage(t *testing.T) {
+	t.Parallel()
 	mockMessage := entities.Message{
 		UserID: 453671289,
 		Text:   "Hello World",
 	}
 	t.Run("should return nil", func(t *testing.T) {
+		t.Parallel()
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 

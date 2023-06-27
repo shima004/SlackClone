@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/shima004/slackclone/entities"
-	"github.com/shima004/slackclone/gateways/repository/user"
+	"github.com/shima004/chat-server/entities"
+	"github.com/shima004/chat-server/gateways/repository/user"
 )
 
 type DefaultUserUsecase struct {

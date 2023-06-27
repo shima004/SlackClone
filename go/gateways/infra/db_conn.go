@@ -3,8 +3,8 @@ package infra
 import (
 	"database/sql"
 
-	"github.com/shima004/slackclone/config"
-	"github.com/shima004/slackclone/entities"
+	"github.com/shima004/chat-server/config"
+	"github.com/shima004/chat-server/entities"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

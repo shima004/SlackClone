@@ -11,18 +11,20 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/labstack/echo/v4"
-	"github.com/shima004/slackclone/controllers/web/handler"
-	"github.com/shima004/slackclone/entities"
-	mock_inputport "github.com/shima004/slackclone/mock/inputport"
+	"github.com/shima004/chat-server/controllers/web/handler"
+	"github.com/shima004/chat-server/entities"
+	mock_inputport "github.com/shima004/chat-server/mock/inputport"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPostChannel(t *testing.T) {
+	t.Parallel()
 	mockChannel := entities.Channel{
 		Name: "test",
 	}
 
 	t.Run("should return nil", func(t *testing.T) {
+		t.Parallel()
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 
@@ -51,6 +53,7 @@ func TestPostChannel(t *testing.T) {
 		assert.Equal(t, uint(1), channelID)
 	})
 	t.Run("should return StatusUnprocessableEntity", func(t *testing.T) {
+		t.Parallel()
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 
@@ -72,6 +75,7 @@ func TestPostChannel(t *testing.T) {
 		assert.Equal(t, http.StatusUnprocessableEntity, rec.Code)
 	})
 	t.Run("should return StatusBadRequest", func(t *testing.T) {
+		t.Parallel()
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 
@@ -95,6 +99,7 @@ func TestPostChannel(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, rec.Code)
 	})
 	t.Run("should return StatusNotFound", func(t *testing.T) {
+		t.Parallel()
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 
@@ -120,7 +125,9 @@ func TestPostChannel(t *testing.T) {
 }
 
 func TestDeleteChannel(t *testing.T) {
+	t.Parallel()
 	t.Run("should return nil", func(t *testing.T) {
+		t.Parallel()
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 
@@ -144,6 +151,7 @@ func TestDeleteChannel(t *testing.T) {
 	})
 
 	t.Run("should return StatusBadRequest", func(t *testing.T) {
+		t.Parallel()
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 
@@ -167,6 +175,7 @@ func TestDeleteChannel(t *testing.T) {
 	})
 
 	t.Run("should return StatusNotFound", func(t *testing.T) {
+		t.Parallel()
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 

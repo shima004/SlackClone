@@ -3,8 +3,8 @@ package message
 import (
 	"context"
 
-	"github.com/shima004/slackclone/entities"
-	"github.com/shima004/slackclone/gateways/repository/datasource/dsmysql"
+	"github.com/shima004/chat-server/entities"
+	"github.com/shima004/chat-server/gateways/repository/datasource/dsmysql"
 )
 
 type MessageRepo struct {

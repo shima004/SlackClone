@@ -3,7 +3,7 @@ package mysqlimpl
 import (
 	"context"
 
-	"github.com/shima004/slackclone/entities"
+	"github.com/shima004/chat-server/entities"
 	"gorm.io/gorm"
 )
 

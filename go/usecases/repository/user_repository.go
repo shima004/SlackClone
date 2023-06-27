@@ -5,7 +5,7 @@ package repository
 import (
 	"context"
 
-	"github.com/shima004/slackclone/entities"
+	"github.com/shima004/chat-server/entities"
 )
 
 type UserRepository interface {

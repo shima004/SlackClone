@@ -5,17 +5,21 @@ import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
-	"github.com/shima004/slackclone/entities"
-	mock_repository "github.com/shima004/slackclone/mock/repository"
+	"github.com/shima004/chat-server/entities"
+	mock_repository "github.com/shima004/chat-server/mock/repository"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateChannel(t *testing.T) {
+	t.Parallel()
+
 	mockChannel := entities.Channel{
 		Name: "test",
 	}
 	mockChannel.ID = 1
+
 	t.Run("should return nil", func(t *testing.T) {
+		t.Parallel()
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 
@@ -34,11 +38,13 @@ func TestCreateChannel(t *testing.T) {
 }
 
 func TestDeleteChannel(t *testing.T) {
+	t.Parallel()
 	mockChannel := entities.Channel{
 		Name: "test",
 	}
 	mockChannel.ID = 1
 	t.Run("should return nil", func(t *testing.T) {
+		t.Parallel()
 		mockCtrl := gomock.NewController(t)
 		defer mockCtrl.Finish()
 

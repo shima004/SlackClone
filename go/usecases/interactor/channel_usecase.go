@@ -6,8 +6,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/shima004/slackclone/entities"
-	"github.com/shima004/slackclone/usecases/repository"
+	"github.com/shima004/chat-server/entities"
+	"github.com/shima004/chat-server/usecases/repository"
 )
 
 type DefaultChannelUsecase struct {
