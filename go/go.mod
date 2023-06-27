@@ -1,4 +1,4 @@
-module github.com/shima004/slackclone
+module github.com/shima004/chat-server
 
 go 1.19
 
