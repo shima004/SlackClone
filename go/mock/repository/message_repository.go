@@ -35,6 +35,21 @@ func (m *MockMessageRepository) EXPECT() *MockMessageRepositoryMockRecorder {
 	return m.recorder
 }
 
+// CreateMessage mocks base method.
+func (m *MockMessageRepository) CreateMessage(ctx context.Context, message *entities.Message) (uint, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateMessage", ctx, message)
+	ret0, _ := ret[0].(uint)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateMessage indicates an expected call of CreateMessage.
+func (mr *MockMessageRepositoryMockRecorder) CreateMessage(ctx, message interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateMessage", reflect.TypeOf((*MockMessageRepository)(nil).CreateMessage), ctx, message)
+}
+
 // DeleteMessage mocks base method.
 func (m *MockMessageRepository) DeleteMessage(ctx context.Context, messageID uint) error {
 	m.ctrl.T.Helper()
@@ -49,37 +64,23 @@ func (mr *MockMessageRepositoryMockRecorder) DeleteMessage(ctx, messageID interf
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMessage", reflect.TypeOf((*MockMessageRepository)(nil).DeleteMessage), ctx, messageID)
 }
 
-// FetchMessages mocks base method.
-func (m *MockMessageRepository) FetchMessages(ctx context.Context, channelID uint, limit, offset int) ([]entities.Message, error) {
+// ReadMessages mocks base method.
+func (m *MockMessageRepository) ReadMessages(ctx context.Context, channelID uint, limit, offset int) ([]*entities.Message, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FetchMessages", ctx, channelID, limit, offset)
-	ret0, _ := ret[0].([]entities.Message)
+	ret := m.ctrl.Call(m, "ReadMessages", ctx, channelID, limit, offset)
+	ret0, _ := ret[0].([]*entities.Message)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// FetchMessages indicates an expected call of FetchMessages.
-func (mr *MockMessageRepositoryMockRecorder) FetchMessages(ctx, channelID, limit, offset interface{}) *gomock.Call {
+// ReadMessages indicates an expected call of ReadMessages.
+func (mr *MockMessageRepositoryMockRecorder) ReadMessages(ctx, channelID, limit, offset interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchMessages", reflect.TypeOf((*MockMessageRepository)(nil).FetchMessages), ctx, channelID, limit, offset)
-}
-
-// PostMessage mocks base method.
-func (m *MockMessageRepository) PostMessage(ctx context.Context, message entities.Message) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PostMessage", ctx, message)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// PostMessage indicates an expected call of PostMessage.
-func (mr *MockMessageRepositoryMockRecorder) PostMessage(ctx, message interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PostMessage", reflect.TypeOf((*MockMessageRepository)(nil).PostMessage), ctx, message)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadMessages", reflect.TypeOf((*MockMessageRepository)(nil).ReadMessages), ctx, channelID, limit, offset)
 }
 
 // UpdateMessage mocks base method.
-func (m *MockMessageRepository) UpdateMessage(ctx context.Context, message entities.Message) error {
+func (m *MockMessageRepository) UpdateMessage(ctx context.Context, message *entities.Message) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateMessage", ctx, message)
 	ret0, _ := ret[0].(error)

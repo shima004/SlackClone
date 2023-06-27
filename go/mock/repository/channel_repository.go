@@ -64,17 +64,17 @@ func (mr *MockChannelRepositoryMockRecorder) DeleteChannel(ctx, channelID interf
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteChannel", reflect.TypeOf((*MockChannelRepository)(nil).DeleteChannel), ctx, channelID)
 }
 
-// FetchChannel mocks base method.
-func (m *MockChannelRepository) FetchChannel(ctx context.Context, channelID uint) (*entities.Channel, error) {
+// ReadChannel mocks base method.
+func (m *MockChannelRepository) ReadChannel(ctx context.Context, channelID uint) (*entities.Channel, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FetchChannel", ctx, channelID)
+	ret := m.ctrl.Call(m, "ReadChannel", ctx, channelID)
 	ret0, _ := ret[0].(*entities.Channel)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// FetchChannel indicates an expected call of FetchChannel.
-func (mr *MockChannelRepositoryMockRecorder) FetchChannel(ctx, channelID interface{}) *gomock.Call {
+// ReadChannel indicates an expected call of ReadChannel.
+func (mr *MockChannelRepositoryMockRecorder) ReadChannel(ctx, channelID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchChannel", reflect.TypeOf((*MockChannelRepository)(nil).FetchChannel), ctx, channelID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadChannel", reflect.TypeOf((*MockChannelRepository)(nil).ReadChannel), ctx, channelID)
 }

@@ -1,16 +1,18 @@
 package main
 
 import (
-	"time"
-
 	"github.com/labstack/echo/v4"
-	"github.com/shima004/slackclone/delivery"
-	repo "github.com/shima004/slackclone/repository/mysql"
-	"github.com/shima004/slackclone/usecase"
+	"github.com/shima004/slackclone/controllers/web/handler"
+	"github.com/shima004/slackclone/frameworks/web/router"
+	"github.com/shima004/slackclone/gateways/datasource/mysqlimpl"
+	sqlDB "github.com/shima004/slackclone/gateways/infra"
+	"github.com/shima004/slackclone/gateways/repository/channel"
+	"github.com/shima004/slackclone/gateways/repository/message"
+	"github.com/shima004/slackclone/usecases/interactor"
 )
 
 func main() {
-	db, sqlDB, err := repo.Connect()
+	db, sqlDB, err := sqlDB.Connect()
 	if err != nil {
 		panic(err)
 	}
@@ -18,12 +20,12 @@ func main() {
 
 	e := echo.New()
 	g := e.Group("/api")
-	mRepo := repo.NewMysqlMessageRepository(db)
-	cRepo := repo.NewMysqlChannelRepository(db)
-	mu := usecase.DefaultMessageUsecase{MessageRepository: mRepo, ChannelRepository: cRepo, ContextTimeout: 10 * time.Second}
-	cu := usecase.DefaultChannelUsecase{ChannelRepository: cRepo, ContextTimeout: 10 * time.Second}
-	delivery.NewMessageHandler(g, &mu)
-	delivery.NewChannelHandler(g, &cu)
-
+	mds := mysqlimpl.NewMysqlMessage(db)
+	mrepo := message.NewMessageRepo(mds)
+	cds := mysqlimpl.NewMysqlChannel(db)
+	crepo := channel.NewChannelRepo(cds)
+	mu := interactor.DefaultMessageUsecase{MessageRepository: mrepo, ChannelRepository: crepo, ContextTimeout: 10}
+	mh := handler.NewMessageHandler(&mu)
+	router.NewMessageHandler(g, mh)
 	e.Logger.Fatal(e.Start(":8080"))
 }
