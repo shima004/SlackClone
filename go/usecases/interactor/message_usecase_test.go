@@ -71,6 +71,22 @@ func TestPostMessage(t *testing.T) {
 		err := mu.PostMessage(context.Background(), &mockMessage)
 		assert.NoError(t, err)
 	})
+
+	t.Run("should return not channel exist", func(t *testing.T) {
+		t.Parallel()
+		mockCtrl := gomock.NewController(t)
+		defer mockCtrl.Finish()
+
+		mockMRepository := mock_repository.NewMockMessageRepository(mockCtrl)
+		mockMRepository.EXPECT().CreateMessage(gomock.Any(), &mockMessage).Return(uint(1), nil).Times(0)
+
+		mockCRepository := mock_repository.NewMockChannelRepository(mockCtrl)
+		mockCRepository.EXPECT().ReadChannel(gomock.Any(), mockMessage.ChannelID).Return(nil, entities.ErrChannelNotFound).Times(1)
+
+		mu := DefaultMessageUsecase{MessageRepository: mockMRepository, ChannelRepository: mockCRepository}
+		err := mu.PostMessage(context.Background(), &mockMessage)
+		assert.Error(t, err)
+	})
 }
 
 func TestDeleteMessage(t *testing.T) {
@@ -88,7 +104,7 @@ func TestDeleteMessage(t *testing.T) {
 		mockRepository.EXPECT().DeleteMessage(gomock.Any(), mockMessage.ID).Return(nil).Times(1)
 
 		mu := DefaultMessageUsecase{MessageRepository: mockRepository}
-		err := mu.DeleteMessage(context.Background(), mockMessage.ID)
+		err := mu.DeleteMessage(context.Background(), mockMessage.ID, mockMessage.UserID)
 		assert.NoError(t, err)
 	})
 }

@@ -50,7 +50,7 @@ func (mh *MessageHandler) PostMessage(c echo.Context) error {
 		return err
 	}
 	if ok, err := utility.IsRequestValid(&message); !ok {
-		return err
+		return c.JSON(http.StatusBadRequest, err)
 	}
 
 	ctx := c.Request().Context()
@@ -66,9 +66,14 @@ func (mh *MessageHandler) DeleteMessage(c echo.Context) error {
 	if err != nil {
 		return err
 	}
+	sUserID := c.Param("user_id")
+	userID, err := utility.StringToUint(sUserID)
+	if err != nil {
+		return err
+	}
 
 	ctx := c.Request().Context()
-	if err := mh.MessageInputPort.DeleteMessage(ctx, messageID); err != nil {
+	if err := mh.MessageInputPort.DeleteMessage(ctx, messageID, userID); err != nil {
 		return err
 	}
 	return c.JSON(200, nil)
