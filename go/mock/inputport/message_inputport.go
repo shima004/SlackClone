@@ -36,17 +36,17 @@ func (m *MockMessageUsecase) EXPECT() *MockMessageUsecaseMockRecorder {
 }
 
 // DeleteMessage mocks base method.
-func (m *MockMessageUsecase) DeleteMessage(ctx context.Context, messageID uint) error {
+func (m *MockMessageUsecase) DeleteMessage(ctx context.Context, messageID, userID uint) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteMessage", ctx, messageID)
+	ret := m.ctrl.Call(m, "DeleteMessage", ctx, messageID, userID)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // DeleteMessage indicates an expected call of DeleteMessage.
-func (mr *MockMessageUsecaseMockRecorder) DeleteMessage(ctx, messageID interface{}) *gomock.Call {
+func (mr *MockMessageUsecaseMockRecorder) DeleteMessage(ctx, messageID, userID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMessage", reflect.TypeOf((*MockMessageUsecase)(nil).DeleteMessage), ctx, messageID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMessage", reflect.TypeOf((*MockMessageUsecase)(nil).DeleteMessage), ctx, messageID, userID)
 }
 
 // FetchMessages mocks base method.

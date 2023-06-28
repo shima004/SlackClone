@@ -64,6 +64,21 @@ func (mr *MockMessageRepositoryMockRecorder) DeleteMessage(ctx, messageID interf
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMessage", reflect.TypeOf((*MockMessageRepository)(nil).DeleteMessage), ctx, messageID)
 }
 
+// ReadMessage mocks base method.
+func (m *MockMessageRepository) ReadMessage(ctx context.Context, messageID uint) (*entities.Message, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ReadMessage", ctx, messageID)
+	ret0, _ := ret[0].(*entities.Message)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReadMessage indicates an expected call of ReadMessage.
+func (mr *MockMessageRepositoryMockRecorder) ReadMessage(ctx, messageID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadMessage", reflect.TypeOf((*MockMessageRepository)(nil).ReadMessage), ctx, messageID)
+}
+
 // ReadMessages mocks base method.
 func (m *MockMessageRepository) ReadMessages(ctx context.Context, channelID uint, limit, offset int) ([]*entities.Message, error) {
 	m.ctrl.T.Helper()

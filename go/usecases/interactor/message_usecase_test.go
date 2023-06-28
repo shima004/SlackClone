@@ -9,6 +9,7 @@ import (
 	"github.com/shima004/chat-server/entities"
 	mock_repository "github.com/shima004/chat-server/mock/repository"
 	"github.com/stretchr/testify/assert"
+	"gorm.io/gorm"
 )
 
 func TestGetAllMessages(t *testing.T) {
@@ -92,6 +93,9 @@ func TestPostMessage(t *testing.T) {
 func TestDeleteMessage(t *testing.T) {
 	t.Parallel()
 	mockMessage := entities.Message{
+		Model: gorm.Model{
+			ID: 1,
+		},
 		UserID: 453671289,
 		Text:   "Hello World",
 	}
@@ -101,6 +105,7 @@ func TestDeleteMessage(t *testing.T) {
 		defer mockCtrl.Finish()
 
 		mockRepository := mock_repository.NewMockMessageRepository(mockCtrl)
+		mockRepository.EXPECT().ReadMessage(gomock.Any(), mockMessage.ID).Return(&mockMessage, nil).Times(1)
 		mockRepository.EXPECT().DeleteMessage(gomock.Any(), mockMessage.ID).Return(nil).Times(1)
 
 		mu := DefaultMessageUsecase{MessageRepository: mockRepository}

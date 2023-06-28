@@ -18,7 +18,11 @@ func NewMessageRepo(mysqldsMessage dsmysql.Message) *MessageRepo {
 }
 
 func (mr *MessageRepo) ReadMessages(ctx context.Context, channelID uint, limit int, offset int) ([]*entities.Message, error) {
-	return mr.mysqldsMessage.Read(ctx, channelID, limit, offset)
+	return mr.mysqldsMessage.ReadByChannelID(ctx, channelID, limit, offset)
+}
+
+func (mr *MessageRepo) ReadMessage(ctx context.Context, messageID uint) (*entities.Message, error) {
+	return mr.mysqldsMessage.ReadByMessageID(ctx, messageID)
 }
 
 func (mr *MessageRepo) CreateMessage(ctx context.Context, message *entities.Message) (uint, error) {

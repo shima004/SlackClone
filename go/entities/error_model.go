@@ -27,6 +27,15 @@ func (e *errChannelNotFound) Error() string {
 
 var ErrChannelNotFound = &errChannelNotFound{}
 
+type errUnauthorized struct {
+}
+
+func (e *errUnauthorized) Error() string {
+	return "unauthorized"
+}
+
+var ErrUnauthorized = &errUnauthorized{}
+
 type errValidation struct {
 	message string
 }

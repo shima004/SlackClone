@@ -15,10 +15,16 @@ func NewMysqlMessage(db *gorm.DB) *MysqlMessage {
 	return &MysqlMessage{db: db}
 }
 
-func (r *MysqlMessage) Read(ctx context.Context, channelID uint, limit int, offset int) ([]*entities.Message, error) {
+func (r *MysqlMessage) ReadByChannelID(ctx context.Context, channelID uint, limit int, offset int) ([]*entities.Message, error) {
 	var messages []*entities.Message
 	result := r.db.Where("channel_id = ?", channelID).Order("created_at desc").Limit(limit).Offset(offset).Find(&messages)
 	return messages, result.Error
+}
+
+func (r *MysqlMessage) ReadByMessageID(ctx context.Context, messageID uint) (*entities.Message, error) {
+	var message entities.Message
+	result := r.db.Where("id = ?", messageID).First(&message)
+	return &message, result.Error
 }
 
 func (r *MysqlMessage) Create(ctx context.Context, message *entities.Message) (uint, error) {

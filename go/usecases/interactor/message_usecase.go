@@ -43,9 +43,17 @@ func (u *DefaultMessageUsecase) PostMessage(ctx context.Context, message *entiti
 	return err
 }
 
-func (u *DefaultMessageUsecase) DeleteMessage(ctx context.Context, messageID uint) (err error) {
+func (u *DefaultMessageUsecase) DeleteMessage(ctx context.Context, messageID uint, userID uint) (err error) {
 	ctx, cancel := context.WithTimeout(ctx, u.ContextTimeout)
 	defer cancel()
+
+	fetchedMessage, err := u.MessageRepository.ReadMessage(ctx, messageID)
+	if err != nil {
+		return err
+	}
+	if fetchedMessage.UserID != userID {
+		return entities.ErrUnauthorized
+	}
 
 	err = u.MessageRepository.DeleteMessage(ctx, messageID)
 	return err
