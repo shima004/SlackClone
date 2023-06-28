@@ -40,6 +40,8 @@ type errValidation struct {
 	message string
 }
 
+var ErrValidation = &errValidation{}
+
 func (e *errValidation) Error() string {
 	return e.message
 }

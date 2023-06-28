@@ -10,6 +10,7 @@ import (
 
 	gomock "github.com/golang/mock/gomock"
 	entities "github.com/shima004/chat-server/entities"
+	validation "github.com/shima004/chat-server/usecases/inputport/validation"
 )
 
 // MockMessageUsecase is a mock of MessageUsecase interface.
@@ -36,58 +37,58 @@ func (m *MockMessageUsecase) EXPECT() *MockMessageUsecaseMockRecorder {
 }
 
 // DeleteMessage mocks base method.
-func (m *MockMessageUsecase) DeleteMessage(ctx context.Context, messageID, userID uint) error {
+func (m *MockMessageUsecase) DeleteMessage(ctx context.Context, in *validation.DeleteMessageInput) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteMessage", ctx, messageID, userID)
+	ret := m.ctrl.Call(m, "DeleteMessage", ctx, in)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // DeleteMessage indicates an expected call of DeleteMessage.
-func (mr *MockMessageUsecaseMockRecorder) DeleteMessage(ctx, messageID, userID interface{}) *gomock.Call {
+func (mr *MockMessageUsecaseMockRecorder) DeleteMessage(ctx, in interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMessage", reflect.TypeOf((*MockMessageUsecase)(nil).DeleteMessage), ctx, messageID, userID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMessage", reflect.TypeOf((*MockMessageUsecase)(nil).DeleteMessage), ctx, in)
 }
 
 // FetchMessages mocks base method.
-func (m *MockMessageUsecase) FetchMessages(ctx context.Context, channelID uint, limit, offset int) ([]*entities.Message, error) {
+func (m *MockMessageUsecase) FetchMessages(ctx context.Context, in *validation.FatchMessagesInput) ([]*entities.Message, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FetchMessages", ctx, channelID, limit, offset)
+	ret := m.ctrl.Call(m, "FetchMessages", ctx, in)
 	ret0, _ := ret[0].([]*entities.Message)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // FetchMessages indicates an expected call of FetchMessages.
-func (mr *MockMessageUsecaseMockRecorder) FetchMessages(ctx, channelID, limit, offset interface{}) *gomock.Call {
+func (mr *MockMessageUsecaseMockRecorder) FetchMessages(ctx, in interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchMessages", reflect.TypeOf((*MockMessageUsecase)(nil).FetchMessages), ctx, channelID, limit, offset)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchMessages", reflect.TypeOf((*MockMessageUsecase)(nil).FetchMessages), ctx, in)
 }
 
 // PostMessage mocks base method.
-func (m *MockMessageUsecase) PostMessage(ctx context.Context, message *entities.Message) error {
+func (m *MockMessageUsecase) PostMessage(ctx context.Context, in *validation.PostMessageInput) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PostMessage", ctx, message)
+	ret := m.ctrl.Call(m, "PostMessage", ctx, in)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // PostMessage indicates an expected call of PostMessage.
-func (mr *MockMessageUsecaseMockRecorder) PostMessage(ctx, message interface{}) *gomock.Call {
+func (mr *MockMessageUsecaseMockRecorder) PostMessage(ctx, in interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PostMessage", reflect.TypeOf((*MockMessageUsecase)(nil).PostMessage), ctx, message)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PostMessage", reflect.TypeOf((*MockMessageUsecase)(nil).PostMessage), ctx, in)
 }
 
 // UpdateMessage mocks base method.
-func (m *MockMessageUsecase) UpdateMessage(ctx context.Context, message *entities.Message) error {
+func (m *MockMessageUsecase) UpdateMessage(ctx context.Context, in *validation.UpdateMessageInput) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateMessage", ctx, message)
+	ret := m.ctrl.Call(m, "UpdateMessage", ctx, in)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // UpdateMessage indicates an expected call of UpdateMessage.
-func (mr *MockMessageUsecaseMockRecorder) UpdateMessage(ctx, message interface{}) *gomock.Call {
+func (mr *MockMessageUsecaseMockRecorder) UpdateMessage(ctx, in interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateMessage", reflect.TypeOf((*MockMessageUsecase)(nil).UpdateMessage), ctx, message)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateMessage", reflect.TypeOf((*MockMessageUsecase)(nil).UpdateMessage), ctx, in)
 }
