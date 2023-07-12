@@ -12,5 +12,6 @@ type ChannelRouter struct {
 func NewChannelHandler(g *echo.Group, ch handler.IChannelHandler) {
 	router := &ChannelRouter{ch}
 	g.POST("/channels", router.ChannelHandler.PostChannel)
-	g.DELETE("/channels/:id", router.ChannelHandler.DeleteChannel)
+	g.DELETE("/channels/:channelID", router.ChannelHandler.DeleteChannel)
+	g.GET("/channels/:channelID", router.ChannelHandler.FetchChannel)
 }

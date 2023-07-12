@@ -7,4 +7,5 @@ import (
 type IChannelHandler interface {
 	PostChannel(c echo.Context) error
 	DeleteChannel(c echo.Context) error
+	FetchChannel(c echo.Context) error
 }

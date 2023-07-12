@@ -7,6 +7,7 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/shima004/chat-server/entities"
 	mock_repository "github.com/shima004/chat-server/mock/repository"
+	"github.com/shima004/chat-server/usecases/inputport/validation"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -31,7 +32,11 @@ func TestCreateChannel(t *testing.T) {
 			ContextTimeout:    5,
 		}
 
-		id, err := mu.CreateChannel(context.TODO(), &mockChannel)
+		in := &validation.CreateChannelInput{
+			Channel: &mockChannel,
+		}
+
+		id, err := mu.CreateChannel(context.TODO(), in)
 		assert.NoError(t, err)
 		assert.Equal(t, mockChannel.ID, uint(id))
 	})
@@ -56,7 +61,11 @@ func TestDeleteChannel(t *testing.T) {
 			ContextTimeout:    5,
 		}
 
-		err := mu.DeleteChannel(context.TODO(), mockChannel.ID)
+		in := &validation.DeleteChannelInput{
+			ChannelID: mockChannel.ID,
+		}
+
+		err := mu.DeleteChannel(context.TODO(), in)
 		assert.NoError(t, err)
 	})
 }

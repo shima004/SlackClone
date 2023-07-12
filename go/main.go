@@ -21,11 +21,14 @@ func main() {
 	e := echo.New()
 	g := e.Group("/api")
 	mds := mysqlimpl.NewMysqlMessage(db)
-	mrepo := message.NewMessageRepo(mds)
 	cds := mysqlimpl.NewMysqlChannel(db)
+	mrepo := message.NewMessageRepo(mds)
 	crepo := channel.NewChannelRepo(cds)
 	mu := interactor.DefaultMessageUsecase{MessageRepository: mrepo, ChannelRepository: crepo, ContextTimeout: 10}
+	cu := interactor.DefaultChannelUsecase{ChannelRepository: crepo, ContextTimeout: 10}
 	mh := handler.NewMessageHandler(&mu)
+	ch := handler.NewChannelHandler(&cu)
+	router.NewChannelHandler(g, ch)
 	router.NewMessageHandler(g, mh)
 	e.Logger.Fatal(e.Start(":8080"))
 }
