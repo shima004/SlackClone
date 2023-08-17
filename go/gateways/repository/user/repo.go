@@ -25,8 +25,10 @@ func (ur *UserRepo) DeleteUser(ctx context.Context, userID uint) error {
 	return ur.dsmysqlUser.Delete(ctx, userID)
 }
 
+
+
 func (ur *UserRepo) ReadUserPassword(ctx context.Context, email string) (string, error) {
-	user, err := ur.dsmysqlUser.Read(ctx, email)
+	user, err := ur.dsmysqlUser.ReadByUserEmail(ctx, email)
 	if err != nil {
 		return "", err
 	}

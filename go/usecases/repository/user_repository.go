@@ -11,5 +11,6 @@ import (
 type UserRepository interface {
 	CreateUser(ctx context.Context, user entities.User) (uint, error)
 	DeleteUser(ctx context.Context, userID uint) error
-	ReadUserPassword(ctx context.Context, email string) (string, error)
+	ReadUserByUserID(ctx context.Context, userID uint) (*entities.User, error)
+	ReadUserByUserEmail(ctx context.Context, userEmail string) (*entities.User, error)
 }

@@ -11,5 +11,7 @@ import (
 type UserUsecase interface {
 	CreateUser(ctx context.Context, user entities.User) error
 	DeleteUser(ctx context.Context, userID uint) error
+	ReadUserByUserID(ctx context.Context, userID uint) (*entities.User, error)
+	SubscribeChannel(ctx context.Context, userID uint, channelID uint) error
 	Login(ctx context.Context, email string, password string) (string, error)
 }
