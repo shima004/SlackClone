@@ -10,6 +10,7 @@ import (
 
 	gomock "github.com/golang/mock/gomock"
 	entities "github.com/shima004/chat-server/entities"
+	validation "github.com/shima004/chat-server/usecases/inputport/validation"
 )
 
 // MockChannelUsecase is a mock of ChannelUsecase interface.
@@ -36,45 +37,45 @@ func (m *MockChannelUsecase) EXPECT() *MockChannelUsecaseMockRecorder {
 }
 
 // CreateChannel mocks base method.
-func (m *MockChannelUsecase) CreateChannel(ctx context.Context, channel *entities.Channel) (uint, error) {
+func (m *MockChannelUsecase) CreateChannel(ctx context.Context, in *validation.CreateChannelInput) (uint, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateChannel", ctx, channel)
+	ret := m.ctrl.Call(m, "CreateChannel", ctx, in)
 	ret0, _ := ret[0].(uint)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // CreateChannel indicates an expected call of CreateChannel.
-func (mr *MockChannelUsecaseMockRecorder) CreateChannel(ctx, channel interface{}) *gomock.Call {
+func (mr *MockChannelUsecaseMockRecorder) CreateChannel(ctx, in interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateChannel", reflect.TypeOf((*MockChannelUsecase)(nil).CreateChannel), ctx, channel)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateChannel", reflect.TypeOf((*MockChannelUsecase)(nil).CreateChannel), ctx, in)
 }
 
 // DeleteChannel mocks base method.
-func (m *MockChannelUsecase) DeleteChannel(ctx context.Context, channelID uint) error {
+func (m *MockChannelUsecase) DeleteChannel(ctx context.Context, in *validation.DeleteChannelInput) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteChannel", ctx, channelID)
+	ret := m.ctrl.Call(m, "DeleteChannel", ctx, in)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // DeleteChannel indicates an expected call of DeleteChannel.
-func (mr *MockChannelUsecaseMockRecorder) DeleteChannel(ctx, channelID interface{}) *gomock.Call {
+func (mr *MockChannelUsecaseMockRecorder) DeleteChannel(ctx, in interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteChannel", reflect.TypeOf((*MockChannelUsecase)(nil).DeleteChannel), ctx, channelID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteChannel", reflect.TypeOf((*MockChannelUsecase)(nil).DeleteChannel), ctx, in)
 }
 
 // FetchChannel mocks base method.
-func (m *MockChannelUsecase) FetchChannel(ctx context.Context, channelID uint) (*entities.Channel, error) {
+func (m *MockChannelUsecase) FetchChannel(ctx context.Context, in *validation.FetchChannelInput) (*entities.Channel, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FetchChannel", ctx, channelID)
+	ret := m.ctrl.Call(m, "FetchChannel", ctx, in)
 	ret0, _ := ret[0].(*entities.Channel)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // FetchChannel indicates an expected call of FetchChannel.
-func (mr *MockChannelUsecaseMockRecorder) FetchChannel(ctx, channelID interface{}) *gomock.Call {
+func (mr *MockChannelUsecaseMockRecorder) FetchChannel(ctx, in interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchChannel", reflect.TypeOf((*MockChannelUsecase)(nil).FetchChannel), ctx, channelID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchChannel", reflect.TypeOf((*MockChannelUsecase)(nil).FetchChannel), ctx, in)
 }

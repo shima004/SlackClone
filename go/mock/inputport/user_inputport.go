@@ -77,3 +77,32 @@ func (mr *MockUserUsecaseMockRecorder) Login(ctx, email, password interface{}) *
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Login", reflect.TypeOf((*MockUserUsecase)(nil).Login), ctx, email, password)
 }
+
+// ReadUserByUserID mocks base method.
+func (m *MockUserUsecase) ReadUserByUserID(ctx context.Context, userID uint) (*entities.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ReadUserByUserID", ctx, userID)
+	ret0, _ := ret[0].(*entities.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReadUserByUserID indicates an expected call of ReadUserByUserID.
+func (mr *MockUserUsecaseMockRecorder) ReadUserByUserID(ctx, userID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadUserByUserID", reflect.TypeOf((*MockUserUsecase)(nil).ReadUserByUserID), ctx, userID)
+}
+
+// SubscribeChannel mocks base method.
+func (m *MockUserUsecase) SubscribeChannel(ctx context.Context, userID, channelID uint) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SubscribeChannel", ctx, userID, channelID)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SubscribeChannel indicates an expected call of SubscribeChannel.
+func (mr *MockUserUsecaseMockRecorder) SubscribeChannel(ctx, userID, channelID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubscribeChannel", reflect.TypeOf((*MockUserUsecase)(nil).SubscribeChannel), ctx, userID, channelID)
+}
